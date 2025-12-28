@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+.tmp
+coverage
+dist
+.env
+.env.*
+.prisma
+.DS_Store
+.idea
+.vscode

@@ -1,0 +1,196 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "submit": "Submit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and"
+  },
+  "nav": {
+    "home": "Home",
+    "tickets": "Tickets",
+    "newTicket": "New Ticket",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "certificates": "Certificates",
+    "login": "Login",
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Digital Help for Everyone",
+    "subtitle": "Free, human, and accessible tech support from volunteers who care.",
+    "cta": {
+      "getHelp": "Get Help Now",
+      "volunteer": "Become a Volunteer"
+    },
+    "stats": {
+      "volunteers": "Volunteers",
+      "helped": "People Helped",
+      "hours": "Hours Volunteered"
+    },
+    "features": {
+      "title": "How ODAN Works",
+      "help": {
+        "title": "Get Help",
+        "description": "Describe your tech problem and get personalized assistance from our volunteers."
+      },
+      "volunteer": {
+        "title": "Volunteer",
+        "description": "Share your knowledge and help others while building verifiable community service hours."
+      },
+      "certificate": {
+        "title": "Get Certified",
+        "description": "Earn verifiable certificates for your contributions, backed by blockchain records."
+      }
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome to ODAN",
+    "loginSubtitle": "Choose how you want to sign in",
+    "telegramNote": "We recommend Telegram for the best experience - free notifications without ads!",
+    "continueWith": "Continue with {provider}",
+    "providers": {
+      "telegram": "Telegram",
+      "google": "Google",
+      "github": "GitHub",
+      "twitter": "X (Twitter)"
+    }
+  },
+  "tickets": {
+    "title": "Help Requests",
+    "new": "New Request",
+    "create": {
+      "title": "Describe Your Problem",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Brief summary of your issue...",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Explain your problem in detail. What have you tried?",
+      "categoryLabel": "Category",
+      "imagesLabel": "Images (optional)",
+      "submit": "Submit Request",
+      "checking": "Checking for similar issues..."
+    },
+    "similar": {
+      "title": "Similar Issues Found",
+      "description": "We found some similar requests. Check if any of these solve your problem:",
+      "viewSolution": "View Solution",
+      "continueAnyway": "Continue with my request"
+    },
+    "duplicate": {
+      "title": "Duplicate Detected",
+      "description": "This issue appears to already exist. Please check the existing ticket.",
+      "viewExisting": "View Existing Ticket"
+    },
+    "status": {
+      "open": "Open",
+      "inProgress": "In Progress",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "noResponses": "No responses yet. A volunteer will help you soon!",
+    "accept": "Accept this ticket",
+    "release": "Release ticket",
+    "resolve": "Mark as resolved"
+  },
+  "response": {
+    "editor": {
+      "title": "Your Response",
+      "placeholder": "Explain the solution step by step...",
+      "timeSpent": "Time: {time}",
+      "submit": "Submit Response",
+      "whiteboard": "Open Whiteboard",
+      "sourceRequired": "Please provide the source URL for pasted content",
+      "pastedWarning": "This content was pasted without a source citation"
+    }
+  },
+  "chat": {
+    "title": "Live Chat",
+    "placeholder": "Type a message...",
+    "typing": "{name} is typing...",
+    "recording": "This conversation is being recorded",
+    "report": "Report Issue"
+  },
+  "whiteboard": {
+    "title": "Whiteboard",
+    "tools": {
+      "pencil": "Pencil",
+      "line": "Line",
+      "rectangle": "Rectangle",
+      "circle": "Circle",
+      "text": "Text",
+      "eraser": "Eraser",
+      "clear": "Clear All",
+      "undo": "Undo"
+    },
+    "colors": "Colors",
+    "strokeWidth": "Stroke Width",
+    "save": "Add to Response"
+  },
+  "certificate": {
+    "title": "Your Certificates",
+    "generate": "Generate Certificate",
+    "period": "Select Period",
+    "periodStart": "Start Date",
+    "periodEnd": "End Date",
+    "download": "Download PDF",
+    "verify": "Verify",
+    "verification": {
+      "title": "Certificate Verification",
+      "valid": "This certificate is valid and verified.",
+      "invalid": "This certificate could not be verified.",
+      "blockchain": "Blockchain Verified"
+    },
+    "details": {
+      "hoursSpent": "Hours Volunteered",
+      "ticketsHelped": "Tickets Resolved",
+      "peopleHelped": "People Helped",
+      "issuedAt": "Issued On"
+    }
+  },
+  "profile": {
+    "title": "Your Profile",
+    "stats": {
+      "title": "Your Statistics",
+      "timeSpent": "Time Volunteered",
+      "ticketsCreated": "Tickets Created",
+      "ticketsResolved": "Tickets Resolved",
+      "peopleHelped": "People Helped"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "theme": "Theme",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "themeSystem": "System"
+    }
+  },
+  "categories": {
+    "os": "Operating System",
+    "software": "Software",
+    "hardware": "Hardware",
+    "network": "Network & Internet",
+    "security": "Security",
+    "mobile": "Mobile Devices",
+    "other": "Other"
+  },
+  "footer": {
+    "about": "About ODAN",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "github": "GitHub",
+    "copyright": "© {year} ODAN. Free and open source."
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "search": "Buscar",
+    "submit": "Enviar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "yes": "Sim",
+    "no": "Não",
+    "or": "ou",
+    "and": "e"
+  },
+  "nav": {
+    "home": "Início",
+    "tickets": "Chamados",
+    "newTicket": "Novo Chamado",
+    "dashboard": "Painel",
+    "profile": "Perfil",
+    "certificates": "Certificados",
+    "login": "Entrar",
+    "logout": "Sair",
+    "settings": "Configurações"
+  },
+  "home": {
+    "title": "Ajuda Digital para Todos",
+    "subtitle": "Suporte técnico gratuito, humano e acessível de voluntários que se importam.",
+    "cta": {
+      "getHelp": "Preciso de Ajuda",
+      "volunteer": "Quero Ser Voluntário"
+    },
+    "stats": {
+      "volunteers": "Voluntários",
+      "helped": "Pessoas Ajudadas",
+      "hours": "Horas Voluntariadas"
+    },
+    "features": {
+      "title": "Como o ODAN Funciona",
+      "help": {
+        "title": "Receba Ajuda",
+        "description": "Descreva seu problema tecnológico e receba assistência personalizada dos nossos voluntários."
+      },
+      "volunteer": {
+        "title": "Seja Voluntário",
+        "description": "Compartilhe seu conhecimento e ajude outras pessoas enquanto acumula horas de serviço comunitário verificáveis."
+      },
+      "certificate": {
+        "title": "Receba Certificados",
+        "description": "Ganhe certificados verificáveis por suas contribuições, com registros em blockchain."
+      }
+    }
+  },
+  "auth": {
+    "loginTitle": "Bem-vindo ao ODAN",
+    "loginSubtitle": "Escolha como você quer entrar",
+    "telegramNote": "Recomendamos o Telegram para a melhor experiência - notificações gratuitas sem anúncios!",
+    "continueWith": "Continuar com {provider}",
+    "providers": {
+      "telegram": "Telegram",
+      "google": "Google",
+      "github": "GitHub",
+      "twitter": "X (Twitter)"
+    }
+  },
+  "tickets": {
+    "title": "Pedidos de Ajuda",
+    "new": "Novo Pedido",
+    "create": {
+      "title": "Descreva Seu Problema",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Resumo breve do seu problema...",
+      "descriptionLabel": "Descrição",
+      "descriptionPlaceholder": "Explique seu problema em detalhes. O que você já tentou?",
+      "categoryLabel": "Categoria",
+      "imagesLabel": "Imagens (opcional)",
+      "submit": "Enviar Pedido",
+      "checking": "Verificando problemas similares..."
+    },
+    "similar": {
+      "title": "Problemas Similares Encontrados",
+      "description": "Encontramos alguns pedidos similares. Veja se algum deles resolve seu problema:",
+      "viewSolution": "Ver Solução",
+      "continueAnyway": "Continuar com meu pedido"
+    },
+    "duplicate": {
+      "title": "Duplicata Detectada",
+      "description": "Este problema parece já existir. Por favor, verifique o chamado existente.",
+      "viewExisting": "Ver Chamado Existente"
+    },
+    "status": {
+      "open": "Aberto",
+      "inProgress": "Em Andamento",
+      "resolved": "Resolvido",
+      "closed": "Fechado"
+    },
+    "noResponses": "Ainda sem respostas. Um voluntário vai te ajudar em breve!",
+    "accept": "Aceitar este chamado",
+    "release": "Liberar chamado",
+    "resolve": "Marcar como resolvido"
+  },
+  "response": {
+    "editor": {
+      "title": "Sua Resposta",
+      "placeholder": "Explique a solução passo a passo...",
+      "timeSpent": "Tempo: {time}",
+      "submit": "Enviar Resposta",
+      "whiteboard": "Abrir Quadro",
+      "sourceRequired": "Por favor, informe a URL da fonte do conteúdo colado",
+      "pastedWarning": "Este conteúdo foi colado sem citação de fonte"
+    }
+  },
+  "chat": {
+    "title": "Chat ao Vivo",
+    "placeholder": "Digite uma mensagem...",
+    "typing": "{name} está digitando...",
+    "recording": "Esta conversa está sendo gravada",
+    "report": "Reportar Problema"
+  },
+  "whiteboard": {
+    "title": "Quadro Branco",
+    "tools": {
+      "pencil": "Lápis",
+      "line": "Linha",
+      "rectangle": "Retângulo",
+      "circle": "Círculo",
+      "text": "Texto",
+      "eraser": "Borracha",
+      "clear": "Limpar Tudo",
+      "undo": "Desfazer"
+    },
+    "colors": "Cores",
+    "strokeWidth": "Espessura",
+    "save": "Adicionar à Resposta"
+  },
+  "certificate": {
+    "title": "Seus Certificados",
+    "generate": "Gerar Certificado",
+    "period": "Selecionar Período",
+    "periodStart": "Data Inicial",
+    "periodEnd": "Data Final",
+    "download": "Baixar PDF",
+    "verify": "Verificar",
+    "verification": {
+      "title": "Verificação de Certificado",
+      "valid": "Este certificado é válido e verificado.",
+      "invalid": "Este certificado não pôde ser verificado.",
+      "blockchain": "Verificado em Blockchain"
+    },
+    "details": {
+      "hoursSpent": "Horas Voluntariadas",
+      "ticketsHelped": "Chamados Resolvidos",
+      "peopleHelped": "Pessoas Ajudadas",
+      "issuedAt": "Emitido Em"
+    }
+  },
+  "profile": {
+    "title": "Seu Perfil",
+    "stats": {
+      "title": "Suas Estatísticas",
+      "timeSpent": "Tempo Voluntariado",
+      "ticketsCreated": "Chamados Criados",
+      "ticketsResolved": "Chamados Resolvidos",
+      "peopleHelped": "Pessoas Ajudadas"
+    },
+    "settings": {
+      "title": "Configurações",
+      "language": "Idioma",
+      "theme": "Tema",
+      "themeLight": "Claro",
+      "themeDark": "Escuro",
+      "themeSystem": "Sistema"
+    }
+  },
+  "categories": {
+    "os": "Sistema Operacional",
+    "software": "Software",
+    "hardware": "Hardware",
+    "network": "Rede e Internet",
+    "security": "Segurança",
+    "mobile": "Dispositivos Móveis",
+    "other": "Outros"
+  },
+  "footer": {
+    "about": "Sobre o ODAN",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Uso",
+    "github": "GitHub",
+    "copyright": "© {year} ODAN. Livre e código aberto."
+  }
+}

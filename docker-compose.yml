@@ -1,0 +1,172 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: odan-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-odan}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odan_secret_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-odan}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odan}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - odan-network
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: odan-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-odan_redis_2024}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-odan_redis_2024}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - odan-network
+
+  # ElasticSearch for ticket search
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: odan-elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - odan-network
+
+  # MinIO for S3-compatible storage
+  minio:
+    image: minio/minio:latest
+    container_name: odan-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-odan_minio}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-odan_minio_secret_2024}
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - odan-network
+
+  # Backend Fastify
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: odan-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-odan}:${POSTGRES_PASSWORD:-odan_secret_2024}@postgres:5432/${POSTGRES_DB:-odan}?schema=public
+      REDIS_URL: redis://:${REDIS_PASSWORD:-odan_redis_2024}@redis:6379
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-odan_minio}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-odan_minio_secret_2024}
+      MINIO_BUCKET: ${MINIO_BUCKET:-odan-uploads}
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_change_in_production}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      AI_SERVICE_URL: http://ai-service:8000
+      # OAuth credentials
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      TWITTER_CLIENT_ID: ${TWITTER_CLIENT_ID}
+      TWITTER_CLIENT_SECRET: ${TWITTER_CLIENT_SECRET}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - odan-network
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: odan-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:4000}
+      NEXT_PUBLIC_SOCKET_URL: ${NEXT_PUBLIC_SOCKET_URL:-http://localhost:4000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - odan-network
+
+  # AI Service (Python)
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: odan-ai-service
+    restart: unless-stopped
+    environment:
+      HUGGINGFACE_API_TOKEN: ${HUGGINGFACE_API_TOKEN}
+      USE_LOCAL_FALLBACK: ${USE_LOCAL_FALLBACK:-true}
+    volumes:
+      - ai_models:/app/models
+    ports:
+      - "8000:8000"
+    networks:
+      - odan-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  elasticsearch_data:
+  minio_data:
+  ai_models:
+
+networks:
+  odan-network:
+    driver: bridge

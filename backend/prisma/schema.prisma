@@ -1,0 +1,305 @@
+// ODAN - Prisma Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  USER
+  VOLUNTEER
+  MODERATOR
+  ADMIN
+}
+
+enum Provider {
+  TELEGRAM
+  GOOGLE
+  GITHUB
+  TWITTER
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  CANCELLED
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  SYSTEM
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWING
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportReason {
+  INAPPROPRIATE_CONTENT
+  HARASSMENT
+  SPAM
+  ILLEGAL_ACTIVITY
+  OTHER
+}
+
+enum ModerationAction {
+  WARNING
+  MUTE
+  TEMPORARY_BAN
+  PERMANENT_BAN
+}
+
+enum BlockchainRecordType {
+  TICKET_CREATED
+  TICKET_RESOLVED
+  RESPONSE_SUBMITTED
+  TIME_LOGGED
+  CERTIFICATE_ISSUED
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String?
+  avatar        String?
+  role          Role      @default(USER)
+  provider      Provider
+  providerId    String
+  locale        String    @default("pt-BR")
+  isBanned      Boolean   @default(false)
+  bannedUntil   DateTime?
+  banReason     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Statistics
+  totalTimeSpent    Int      @default(0) // in seconds
+  ticketsCreated    Int      @default(0)
+  ticketsResolved   Int      @default(0)
+  peopleHelped      Int      @default(0)
+
+  // Relations
+  ticketsAsCreator    Ticket[]        @relation("TicketCreator")
+  ticketsAsVolunteer  Ticket[]        @relation("TicketVolunteer")
+  responses           Response[]
+  certificates        Certificate[]
+  reportsSubmitted    Report[]        @relation("Reporter")
+  reportsReceived     Report[]        @relation("Reported")
+  moderationActions   ModerationLog[] @relation("ModeratedUser")
+  moderationsMade     ModerationLog[] @relation("Moderator")
+  sessions            Session[]
+
+  @@unique([provider, providerId])
+  @@index([email])
+  @@index([role])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  title       String
+  description String       @db.Text
+  images      String[]
+  category    String
+  status      TicketStatus @default(OPEN)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  resolvedAt  DateTime?
+  closedAt    DateTime?
+
+  // Creator
+  creatorId   String
+  creator     User         @relation("TicketCreator", fields: [creatorId], references: [id])
+
+  // Volunteer (who accepts the ticket)
+  volunteerId String?
+  volunteer   User?        @relation("TicketVolunteer", fields: [volunteerId], references: [id])
+
+  // Relations
+  responses   Response[]
+  messages    Message[]
+  reports     Report[]
+
+  @@index([status])
+  @@index([category])
+  @@index([creatorId])
+  @@index([volunteerId])
+  @@index([createdAt])
+}
+
+model Response {
+  id            String   @id @default(cuid())
+  content       String   @db.Text
+  images        String[]
+  whiteboardImg String?
+  timeSpent     Int      @default(0) // in seconds
+  isPasted      Boolean  @default(false)
+  hasSource     Boolean  @default(false)
+  sourceUrl     String?
+  isAccepted    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  ticketId String
+  ticket   Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  @@index([ticketId])
+  @@index([authorId])
+}
+
+// Messages are only stored when a report is filed
+model Message {
+  id        String      @id @default(cuid())
+  content   String      @db.Text
+  type      MessageType @default(TEXT)
+  senderId  String
+  createdAt DateTime    @default(now())
+
+  ticketId String
+  ticket   Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  // Expiration for auto-delete after 30 days
+  expiresAt DateTime?
+
+  @@index([ticketId])
+  @@index([senderId])
+  @@index([expiresAt])
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  reason      ReportReason
+  description String?      @db.Text
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  resolvedAt  DateTime?
+  resolution  String?
+
+  // Reporter
+  reporterId String
+  reporter   User   @relation("Reporter", fields: [reporterId], references: [id])
+
+  // Reported user
+  reportedId String
+  reported   User   @relation("Reported", fields: [reportedId], references: [id])
+
+  // Optional ticket context
+  ticketId String?
+  ticket   Ticket? @relation(fields: [ticketId], references: [id])
+
+  // Expiration for auto-delete
+  expiresAt DateTime?
+
+  @@index([status])
+  @@index([reporterId])
+  @@index([reportedId])
+}
+
+model ModerationLog {
+  id        String           @id @default(cuid())
+  action    ModerationAction
+  reason    String
+  duration  Int?             // in hours, for temp bans
+  createdAt DateTime         @default(now())
+  expiresAt DateTime?
+
+  // User being moderated
+  userId String
+  user   User   @relation("ModeratedUser", fields: [userId], references: [id])
+
+  // Moderator who took action
+  moderatorId String
+  moderator   User   @relation("Moderator", fields: [moderatorId], references: [id])
+
+  // AI flagged
+  aiTriggered Boolean @default(false)
+  aiConfidence Float?
+
+  @@index([userId])
+  @@index([moderatorId])
+}
+
+model Certificate {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  periodStart   DateTime
+  periodEnd     DateTime
+  hoursSpent    Int      // in minutes
+  ticketsHelped Int
+  peopleHelped  Int
+  issuedAt      DateTime @default(now())
+
+  // Blockchain hash for verification
+  blockchainHash String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([code])
+  @@index([userId])
+}
+
+// Blockchain record stored in database (backup)
+model BlockchainRecord {
+  id        String               @id @default(cuid())
+  index     Int                  @unique
+  type      BlockchainRecordType
+  data      Json
+  hash      String               @unique
+  prevHash  String
+  timestamp DateTime             @default(now())
+  nonce     Int
+
+  @@index([hash])
+  @@index([type])
+}
+
+// Categories for tickets
+model Category {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  nameEn      String
+  namePt      String
+  nameEs      String
+  description String?
+  icon        String?
+  isActive    Boolean @default(true)
+  order       Int     @default(0)
+
+  @@index([isActive])
+}
