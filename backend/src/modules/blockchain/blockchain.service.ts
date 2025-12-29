@@ -199,8 +199,8 @@ async function syncWithDatabase(): Promise<void> {
       await prisma.blockchainRecord.create({
         data: {
           index: block.index,
-          type: block.data.type as string,
-          data: block.data as BlockData,
+          type: block.data.type as any,
+          data: block.data as any,
           hash: block.hash,
           prevHash: block.prevHash,
           timestamp: new Date(block.timestamp),
@@ -262,8 +262,8 @@ export async function addRecord(
   await prisma.blockchainRecord.create({
     data: {
       index: finalBlock.index,
-      type: type as string,
-      data: blockData as BlockData,
+      type: type as any,
+      data: blockData as any,
       hash: finalBlock.hash,
       prevHash: finalBlock.prevHash,
       timestamp: new Date(finalBlock.timestamp),

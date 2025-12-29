@@ -189,6 +189,7 @@ export interface GenerateCertificateDTO {
 export interface BlockData {
   type: string;
   userId?: string;
+  volunteerId?: string;
   ticketId?: string;
   responseId?: string;
   certificateId?: string;

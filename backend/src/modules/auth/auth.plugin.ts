@@ -18,6 +18,7 @@ declare module '@fastify/jwt' {
 
 async function authPlugin(server: FastifyInstance) {
   server.decorate('authenticate', async function (
+    this: FastifyInstance,
     request: FastifyRequest,
     _reply: FastifyReply
   ) {
@@ -29,6 +30,7 @@ async function authPlugin(server: FastifyInstance) {
   });
 
   server.decorate('authenticateOptional', async function (
+    this: FastifyInstance,
     request: FastifyRequest,
     _reply: FastifyReply
   ) {
@@ -40,9 +42,9 @@ async function authPlugin(server: FastifyInstance) {
     }
   });
 
-  server.decorate('requireRole', function (...roles: string[]) {
-    return async function (request: FastifyRequest, _reply: FastifyReply) {
-      await server.authenticate(request);
+  server.decorate('requireRole', function (this: FastifyInstance, ...roles: string[]) {
+    return async function (this: FastifyInstance, request: FastifyRequest, _reply: FastifyReply) {
+      await server.authenticate.call(this, request, _reply);
       const user = request.user as JWTPayload;
       if (!roles.includes(user.role)) {
         throw new ForbiddenError('Insufficient permissions');
@@ -51,10 +53,11 @@ async function authPlugin(server: FastifyInstance) {
   });
 
   server.decorate('requireVolunteer', async function (
+    this: FastifyInstance,
     request: FastifyRequest,
     _reply: FastifyReply
   ) {
-    await server.authenticate(request);
+    await server.authenticate.call(this, request, _reply);
     const user = request.user as JWTPayload;
     if (!['VOLUNTEER', 'MODERATOR', 'ADMIN'].includes(user.role)) {
       throw new ForbiddenError('Volunteer access required');
@@ -62,10 +65,11 @@ async function authPlugin(server: FastifyInstance) {
   });
 
   server.decorate('requireModerator', async function (
+    this: FastifyInstance,
     request: FastifyRequest,
     _reply: FastifyReply
   ) {
-    await server.authenticate(request);
+    await server.authenticate.call(this, request, _reply);
     const user = request.user as JWTPayload;
     if (!['MODERATOR', 'ADMIN'].includes(user.role)) {
       throw new ForbiddenError('Moderator access required');
@@ -73,10 +77,11 @@ async function authPlugin(server: FastifyInstance) {
   });
 
   server.decorate('requireAdmin', async function (
+    this: FastifyInstance,
     request: FastifyRequest,
     _reply: FastifyReply
   ) {
-    await server.authenticate(request);
+    await server.authenticate.call(this, request, _reply);
     const user = request.user as JWTPayload;
     if (user.role !== 'ADMIN') {
       throw new ForbiddenError('Admin access required');
@@ -86,12 +91,12 @@ async function authPlugin(server: FastifyInstance) {
 
 declare module 'fastify' {
   interface FastifyInstance {
-    authenticate: (request: FastifyRequest) => Promise<void>;
-    authenticateOptional: (request: FastifyRequest) => Promise<void>;
-    requireRole: (...roles: string[]) => (request: FastifyRequest) => Promise<void>;
-    requireVolunteer: (request: FastifyRequest) => Promise<void>;
-    requireModerator: (request: FastifyRequest) => Promise<void>;
-    requireAdmin: (request: FastifyRequest) => Promise<void>;
+    authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    authenticateOptional: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    requireRole: (...roles: string[]) => (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    requireVolunteer: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    requireModerator: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+    requireAdmin: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
   }
 }
 

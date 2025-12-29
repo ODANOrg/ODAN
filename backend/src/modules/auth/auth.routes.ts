@@ -121,7 +121,7 @@ export default async function authRoutes(server: FastifyInstance) {
     // Generate JWT token
     const token = server.jwt.sign({
       id: user.id,
-      email: user.email,
+      email: user.email ?? undefined,
       role: user.role,
       provider: user.provider,
     });
@@ -238,7 +238,7 @@ export default async function authRoutes(server: FastifyInstance) {
     // Generate JWT
     const token = server.jwt.sign({
       id: user.id,
-      email: user.email,
+      email: user.email ?? undefined,
       role: user.role,
       provider: user.provider,
     });
@@ -344,7 +344,7 @@ export default async function authRoutes(server: FastifyInstance) {
     // Generate JWT
     const token = server.jwt.sign({
       id: user.id,
-      email: user.email,
+        email: user.email ?? undefined,
       role: user.role,
       provider: user.provider,
     });
@@ -468,7 +468,7 @@ export default async function authRoutes(server: FastifyInstance) {
     // Generate JWT
     const token = server.jwt.sign({
       id: user.id,
-      email: user.email,
+        email: user.email ?? undefined,
       role: user.role,
       provider: user.provider,
     });

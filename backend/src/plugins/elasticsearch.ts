@@ -154,12 +154,12 @@ export async function searchSimilarTickets(
       },
     });
 
-    return response.hits.hits.map((hit: { _source: any; _score?: number }) => ({
-      id: hit._source.id,
-      title: hit._source.title,
-      description: hit._source.description,
-      category: hit._source.category,
-      status: hit._source.status,
+    return response.hits.hits.map((hit: any) => ({
+      id: hit._source?.id,
+      title: hit._source?.title,
+      description: hit._source?.description,
+      category: hit._source?.category,
+      status: hit._source?.status,
       score: hit._score || 0,
     }));
   } catch (error) {
@@ -226,10 +226,7 @@ export async function searchTickets(
         },
         from: (page - 1) * limit,
         size: limit,
-        sort: [
-          { _score: 'desc' },
-          { createdAt: 'desc' },
-        ],
+        sort: ['_score:desc', 'createdAt:desc'],
       },
     });
 
@@ -238,12 +235,12 @@ export async function searchTickets(
       : response.hits.total?.value || 0;
 
     return {
-      hits: response.hits.hits.map((hit: { _source: any; _score?: number }) => ({
-        id: hit._source.id,
-        title: hit._source.title,
-        description: hit._source.description,
-        category: hit._source.category,
-        status: hit._source.status,
+      hits: response.hits.hits.map((hit: any) => ({
+        id: hit._source?.id,
+        title: hit._source?.title,
+        description: hit._source?.description,
+        category: hit._source?.category,
+        status: hit._source?.status,
         score: hit._score || 0,
       })),
       total,

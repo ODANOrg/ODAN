@@ -416,9 +416,9 @@ export default async function ticketRoutes(server: FastifyInstance) {
   }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const { id } = ticketIdParamSchema.parse(request.params);
-    const body = z.object({
-      acceptedResponseId: z.string().optional(),
-    }).parse(request.body);
+      const body = z.object({
+        acceptedResponseId: z.string().optional(),
+      }).parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -483,7 +483,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
     // Add to blockchain
     await addRecord(BlockchainRecordType.TICKET_RESOLVED, {
       ticketId: id,
-      volunteerId: ticket.volunteerId,
+      volunteerId: ticket.volunteerId ?? undefined,
       timeSpent: totalTime,
     });
 
@@ -867,9 +867,9 @@ export default async function ticketRoutes(server: FastifyInstance) {
   }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const { id } = ticketIdParamSchema.parse(request.params);
-    // const _body = z.object({
-    //   acceptedResponseId: z.string().optional(),
-    // }).parse(request.body);
+    const body = z.object({
+      acceptedResponseId: z.string().optional(),
+    }).parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -934,7 +934,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
     // Add to blockchain
     await addRecord(BlockchainRecordType.TICKET_RESOLVED, {
       ticketId: id,
-      volunteerId: ticket.volunteerId,
+      volunteerId: ticket.volunteerId ?? undefined,
       timeSpent: totalTime,
     });
 
@@ -961,7 +961,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
     }
 
     // Only creator or admin can close
-    if (ticket.creatorId !== payload.id && ticket.role !== 'ADMIN') {
+      if (ticket.creatorId !== payload.id && payload.role !== 'ADMIN') {
       throw new ForbiddenError('Not authorized to close this ticket');
     }
 
