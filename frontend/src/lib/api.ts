@@ -132,20 +132,6 @@ class ApiClient {
 
     return response.json();
   }
-
-  // Stats
-  async getStats() {
-    return this.request<{ volunteers: number; peopleHelped: number; hoursSpent: number }>('/stats');
-  }
-
-  async getUserStats(token: string) {
-    return this.request<any>('/stats/me', { token });
-  }
-
-  // Search
-  async search(query: string, type?: string, token?: string) {
-    return this.request<any[]>(`/search?q=${encodeURIComponent(query)}${type ? `&type=${type}` : ''}`, { token });
-  }
 }
 
-export const api = new ApiClient(API_URL);
+export const apiClient = new ApiClient(API_URL);
