@@ -1,6 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-import type { UserStats } from '@/types/backend';
+import type { UserStats, PlatformStats } from '@/types/backend';
 
 interface FetchOptions extends RequestInit {
   token?: string;
@@ -137,6 +137,15 @@ class ApiClient {
 
   async getUserStats(token: string): Promise<UserStats> {
     return this.request<{ stats: UserStats }>(`/users/stats`, { token }).then((res) => res.stats);
+  }
+
+  async getStats(): Promise<PlatformStats | null> {
+    try {
+      const res = await this.request<{ data: PlatformStats }>(`/stats/platform`);
+      return res.data || null;
+    } catch (err) {
+      return null;
+    }
   }
 }
 
