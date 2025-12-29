@@ -15,7 +15,7 @@ const INDEX_FILE = path.join(BLOCKCHAIN_DIR, 'index.json');
 
 // In-memory chain for faster access
 let chain: Block[] = [];
-let chainIndex: Map<string, number> = new Map();
+const chainIndex: Map<string, number> = new Map();
 
 export enum BlockchainRecordType {
   TICKET_CREATED = 'TICKET_CREATED',
@@ -199,8 +199,8 @@ async function syncWithDatabase(): Promise<void> {
       await prisma.blockchainRecord.create({
         data: {
           index: block.index,
-          type: block.data.type as any,
-          data: block.data as any,
+          type: block.data.type as string,
+          data: block.data as BlockData,
           hash: block.hash,
           prevHash: block.prevHash,
           timestamp: new Date(block.timestamp),
@@ -262,8 +262,8 @@ export async function addRecord(
   await prisma.blockchainRecord.create({
     data: {
       index: finalBlock.index,
-      type: type as any,
-      data: blockData as any,
+      type: type as string,
+      data: blockData as BlockData,
       hash: finalBlock.hash,
       prevHash: finalBlock.prevHash,
       timestamp: new Date(finalBlock.timestamp),

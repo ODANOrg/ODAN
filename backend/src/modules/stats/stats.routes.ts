@@ -5,7 +5,7 @@ import { cache } from '../../plugins/redis.js';
 
 export default async function statsRoutes(server: FastifyInstance) {
   // Platform statistics (public, cached)
-  server.get('/platform', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/platform', async (request: FastifyRequest) => {
     const cacheKey = 'stats:platform';
     
     // Try cache first
@@ -67,7 +67,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Top volunteers leaderboard (public, cached)
-  server.get('/leaderboard', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/leaderboard', async (request: FastifyRequest) => {
     const cacheKey = 'stats:leaderboard';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -95,7 +95,7 @@ export default async function statsRoutes(server: FastifyInstance) {
       },
     });
 
-    const leaderboard = topVolunteers.map((user, index) => ({
+    const leaderboard = topVolunteers.map((user: any, index: number) => ({
       rank: index + 1,
       id: user.id,
       name: user.name,
@@ -112,7 +112,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Category statistics (public, cached)
-  server.get('/categories', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/categories', async (request: FastifyRequest) => {
     const cacheKey = 'stats:categories';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -134,10 +134,10 @@ export default async function statsRoutes(server: FastifyInstance) {
     });
 
     const resolvedMap = new Map(
-      resolvedByCategory.map(c => [c.category, c._count])
+      resolvedByCategory.map((c: any) => [c.category, c._count])
     );
 
-    const stats = categoryStats.map(cat => ({
+    const stats = categoryStats.map((cat: any) => ({
       category: cat.category,
       total: cat._count,
       resolved: resolvedMap.get(cat.category) || 0,
@@ -153,7 +153,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Recent activity (public, cached)
-  server.get('/recent', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/recent', async (request: FastifyRequest) => {
     const cacheKey = 'stats:recent';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -187,7 +187,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Time series stats (for charts)
-  server.get('/timeline', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/timeline', async (request: FastifyRequest) => {
     const cacheKey = 'stats:timeline';
     
     const cached = await cache.get<object>(cacheKey);
@@ -220,7 +220,7 @@ export default async function statsRoutes(server: FastifyInstance) {
       dailyStats[key] = { created: 0, resolved: 0 };
     }
 
-    tickets.forEach(ticket => {
+    tickets.forEach((ticket: any) => {
       const createdKey = ticket.createdAt.toISOString().split('T')[0];
       if (dailyStats[createdKey]) {
         dailyStats[createdKey].created++;

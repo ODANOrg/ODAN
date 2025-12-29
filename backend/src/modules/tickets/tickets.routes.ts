@@ -40,7 +40,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
   // Check for similar tickets before creating
   server.post('/check-similar', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const body = z.object({
       title: z.string().min(5),
       description: z.string().min(10),
@@ -169,12 +169,12 @@ export default async function ticketRoutes(server: FastifyInstance) {
   // List tickets
   server.get('/', {
     preHandler: [server.authenticateOptional],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const query = listQuerySchema.parse(request.query);
     const page = parseInt(query.page || '1', 10);
     const limit = parseInt(query.limit || '20', 10);
 
-    const where: any = {};
+    const where: Record<string, unknown> = {};
 
     if (query.status) {
       where.status = query.status;
@@ -446,7 +446,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
     }
 
     // Calculate total time spent
-    const totalTime = ticket.responses.reduce((acc, r) => acc + r.timeSpent, 0);
+    const totalTime = ticket.responses.reduce((acc: number, r: { timeSpent: number }) => acc + r.timeSpent, 0);
 
     // Mark accepted response if provided
     if (body.acceptedResponseId) {
@@ -533,7 +533,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
   });
 
   // Get categories
-  server.get('/meta/categories', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/meta/categories', async (request: FastifyRequest) => {
     const categories = await prisma.category.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' },

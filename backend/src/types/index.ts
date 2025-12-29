@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest } from 'fastify';
 import { User, Ticket, Response as TicketResponse } from '@prisma/client';
 
 // ============================================

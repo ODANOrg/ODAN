@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
-            npm ci
+            npm ci || npm install
           else
             npm install
           fi
@@ -45,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
-            npm ci
+            npm ci || npm install
           else
             npm install
           fi

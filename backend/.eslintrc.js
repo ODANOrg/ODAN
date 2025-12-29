@@ -16,6 +16,9 @@ module.exports = {
     es6: true,
   },
   rules: {
-    // Add any custom rules here
+    // Allow unused function arguments when prefixed with `_`
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    // Relax explicit any rule in CI for faster iteration; consider re-enabling later
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

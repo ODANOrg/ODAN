@@ -19,7 +19,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   // Upload single image
   server.post('/image', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
 
     const data = await request.file();
@@ -94,7 +94,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   // Upload multiple images
   server.post('/images', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
 
     const files = request.files();
@@ -161,7 +161,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   // Upload whiteboard image
   server.post('/whiteboard', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const body = z.object({
       imageData: z.string(), // base64 encoded image
     }).parse(request.body);
@@ -195,7 +195,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   // Delete image (own uploads only - handled by checking response ownership)
   server.delete('/:key', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const { key } = z.object({ key: z.string() }).parse(request.params);
 
     // For security, only allow deleting from specific folders

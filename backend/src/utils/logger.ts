@@ -1,4 +1,3 @@
-import { FastifyBaseLogger } from 'fastify';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 

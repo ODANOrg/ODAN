@@ -28,7 +28,7 @@ export default async function certificateRoutes(server: FastifyInstance) {
   // Generate certificate
   server.post('/generate', {
     preHandler: [server.requireVolunteer],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const body = generateCertificateSchema.parse(request.body);
 
@@ -81,9 +81,9 @@ export default async function certificateRoutes(server: FastifyInstance) {
       },
     });
 
-    const totalSeconds = responses.reduce((acc, r) => acc + r.timeSpent, 0);
-    const uniqueTickets = new Set(responses.map(r => r.ticketId)).size;
-    const uniquePeople = new Set(responses.map(r => r.ticket.creatorId)).size;
+    const totalSeconds = responses.reduce((acc: number, r: { timeSpent: number }) => acc + r.timeSpent, 0);
+    const uniqueTickets = new Set(responses.map((r: { ticketId: string }) => r.ticketId)).size;
+    const uniquePeople = new Set(responses.map((r: { ticket: { creatorId: string } }) => r.ticket.creatorId)).size;
 
     if (totalSeconds === 0) {
       throw new BadRequestError('No volunteer activity found in this period');
@@ -141,7 +141,7 @@ export default async function certificateRoutes(server: FastifyInstance) {
   });
 
   // Verify certificate (public)
-  server.get('/verify/:code', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/verify/:code', async (request: FastifyRequest) => {
     const { code } = certificateCodeSchema.parse(request.params);
 
     const certificate = await prisma.certificate.findUnique({
@@ -366,7 +366,7 @@ export default async function certificateRoutes(server: FastifyInstance) {
   // Get user's blockchain activity
   server.get('/blockchain-activity', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
 
     const records = getRecordsForUser(payload.id);

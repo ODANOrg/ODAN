@@ -22,7 +22,7 @@ const oauthCallbackSchema = z.object({
   state: z.string().optional(),
 });
 
-const providerSchema = z.enum(['google', 'github', 'twitter', 'telegram']);
+// const providerSchema = z.enum(['google', 'github', 'twitter', 'telegram']);
 
 export default async function authRoutes(server: FastifyInstance) {
   // Get available providers
@@ -154,7 +154,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Google OAuth - Get authorization URL
-  server.get('/google', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/google', async (request: FastifyRequest) => {
     if (!CONFIG.oauth.google.clientId) {
       throw new BadRequestError('Google authentication is not configured');
     }
@@ -175,7 +175,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Google OAuth callback
-  server.post('/google/callback', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.post('/google/callback', async (request: FastifyRequest) => {
     const { code } = oauthCallbackSchema.parse(request.body);
 
     if (!CONFIG.oauth.google.clientId || !CONFIG.oauth.google.clientSecret) {
@@ -259,7 +259,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // GitHub OAuth - Get authorization URL
-  server.get('/github', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/github', async (request: FastifyRequest) => {
     if (!CONFIG.oauth.github.clientId) {
       throw new BadRequestError('GitHub authentication is not configured');
     }
@@ -279,7 +279,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // GitHub OAuth callback
-  server.post('/github/callback', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.post('/github/callback', async (request: FastifyRequest) => {
     const { code } = oauthCallbackSchema.parse(request.body);
 
     if (!CONFIG.oauth.github.clientId || !CONFIG.oauth.github.clientSecret) {
@@ -365,7 +365,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Twitter/X OAuth - Get authorization URL
-  server.get('/twitter', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/twitter', async (request: FastifyRequest) => {
     if (!CONFIG.oauth.twitter.clientId) {
       throw new BadRequestError('Twitter authentication is not configured');
     }
@@ -393,7 +393,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Twitter/X OAuth callback
-  server.post('/twitter/callback', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.post('/twitter/callback', async (request: FastifyRequest) => {
     const { code, state } = oauthCallbackSchema.parse(request.body);
 
     if (!CONFIG.oauth.twitter.clientId || !CONFIG.oauth.twitter.clientSecret) {
@@ -491,7 +491,7 @@ export default async function authRoutes(server: FastifyInstance) {
   // Get current user
   server.get('/me', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as { id: string };
 
     const user = await prisma.user.findUnique({
@@ -521,7 +521,7 @@ export default async function authRoutes(server: FastifyInstance) {
   // Logout
   server.post('/logout', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as { id: string };
 
     // Delete all sessions for user

@@ -25,7 +25,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Create response
   server.post('/', {
     preHandler: [server.requireVolunteer],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const body = createResponseSchema.parse(request.body);
 
@@ -105,7 +105,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Get response by ID
   server.get('/:id', {
     preHandler: [server.authenticateOptional],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const { id } = responseIdParamSchema.parse(request.params);
 
     const response = await prisma.response.findUnique({
@@ -138,7 +138,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Update response
   server.patch('/:id', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const { id } = responseIdParamSchema.parse(request.params);
     const body = z.object({
@@ -201,7 +201,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Delete response
   server.delete('/:id', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const { id } = responseIdParamSchema.parse(request.params);
 
@@ -241,7 +241,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Accept response (ticket creator only)
   server.post('/:id/accept', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const { id } = responseIdParamSchema.parse(request.params);
 
@@ -289,7 +289,7 @@ export default async function responseRoutes(server: FastifyInstance) {
   // Log additional time (for editing without content change)
   server.post('/:id/log-time', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest) => {
     const payload = request.user as JWTPayload;
     const { id } = responseIdParamSchema.parse(request.params);
     const body = z.object({

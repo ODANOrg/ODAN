@@ -19,7 +19,7 @@ const similarQuerySchema = z.object({
 
 export default async function searchRoutes(server: FastifyInstance) {
   // Search tickets
-  server.get('/tickets', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/tickets', async (request: FastifyRequest) => {
     const query = searchQuerySchema.parse(request.query);
 
     const page = parseInt(query.page || '1', 10);
@@ -45,7 +45,7 @@ export default async function searchRoutes(server: FastifyInstance) {
   });
 
   // Find similar tickets
-  server.post('/similar', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.post('/similar', async (request: FastifyRequest) => {
     const body = similarQuerySchema.parse(request.body);
     const limit = Math.min(parseInt(body.limit || '5', 10), 20);
 
@@ -62,7 +62,7 @@ export default async function searchRoutes(server: FastifyInstance) {
   });
 
   // Autocomplete for search
-  server.get('/autocomplete', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/autocomplete', async (request: FastifyRequest) => {
     const query = z.object({
       q: z.string().min(2),
     }).parse(request.query);

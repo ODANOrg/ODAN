@@ -119,7 +119,7 @@ export async function searchSimilarTickets(
   try {
     const client = getElasticsearch();
     
-    const must: any[] = [
+    const must: Record<string, unknown>[] = [
       {
         multi_match: {
           query,
@@ -130,7 +130,7 @@ export async function searchSimilarTickets(
       },
     ];
 
-    const mustNot: any[] = [];
+    const mustNot: Record<string, unknown>[] = [];
 
     if (category) {
       must.push({ term: { category } });
@@ -154,7 +154,7 @@ export async function searchSimilarTickets(
       },
     });
 
-    return response.hits.hits.map((hit: any) => ({
+    return response.hits.hits.map((hit: { _source: any; _score?: number }) => ({
       id: hit._source.id,
       title: hit._source.title,
       description: hit._source.description,
@@ -193,8 +193,8 @@ export async function searchTickets(
   try {
     const client = getElasticsearch();
     
-    const must: any[] = [];
-    const filter: any[] = [];
+    const must: Record<string, unknown>[] = [];
+    const filter: Record<string, unknown>[] = [];
 
     if (query) {
       must.push({
@@ -238,7 +238,7 @@ export async function searchTickets(
       : response.hits.total?.value || 0;
 
     return {
-      hits: response.hits.hits.map((hit: any) => ({
+      hits: response.hits.hits.map((hit: { _source: any; _score?: number }) => ({
         id: hit._source.id,
         title: hit._source.title,
         description: hit._source.description,
@@ -283,7 +283,7 @@ export async function checkForDuplicate(
     });
 
     if (exactMatch.hits.hits.length > 0) {
-      const hit = exactMatch.hits.hits[0] as any;
+      const hit = exactMatch.hits.hits[0] as { _source: any };
       return {
         isDuplicate: true,
         duplicateId: hit._source.id,
@@ -311,7 +311,7 @@ export async function checkForDuplicate(
     });
 
     if (similarMatch.hits.hits.length > 0) {
-      const hit = similarMatch.hits.hits[0] as any;
+      const hit = similarMatch.hits.hits[0] as { _source: any; _score?: number };
       const score = hit._score || 0;
       const maxScore = similarMatch.hits.max_score || score;
       const similarity = score / maxScore;
