@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { uploadFile, deleteFile } from '../../plugins/minio.js';
 import { JWTPayload } from '../auth/auth.plugin.js';

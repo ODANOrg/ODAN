@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { prisma } from '../../plugins/prisma.js';
 import { getChainLength, getLatestBlock } from '../blockchain/blockchain.service.js';
 import { cache } from '../../plugins/redis.js';

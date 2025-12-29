@@ -18,7 +18,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Get user profile
   server.get('/:id', {
     preHandler: [server.authenticateOptional],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const { id } = userIdParamSchema.parse(request.params);
 
     const user = await prisma.user.findUnique({
@@ -51,7 +51,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Update current user profile
   server.patch('/me', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const updates = updateUserSchema.parse(request.body);
 
@@ -73,7 +73,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Get user statistics
   server.get('/me/stats', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
 
     const user = await prisma.user.findUnique({
@@ -120,7 +120,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Get user's tickets
   server.get('/me/tickets', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const query = request.query as { page?: string; limit?: string; type?: 'created' | 'helped' };
     
@@ -168,7 +168,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Get user's certificates
   server.get('/me/certificates', {
     preHandler: [server.authenticate],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
 
     const certificates = await prisma.certificate.findMany({
@@ -193,7 +193,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Promote user to volunteer (admin only)
   server.post('/:id/promote', {
     preHandler: [server.requireAdmin],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const { id } = userIdParamSchema.parse(request.params);
     const body = z.object({ role: z.enum(['VOLUNTEER', 'MODERATOR']) }).parse(request.body);
 
@@ -213,7 +213,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Ban user (moderator/admin)
   server.post('/:id/ban', {
     preHandler: [server.requireModerator],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const { id } = userIdParamSchema.parse(request.params);
     const body = z.object({
       reason: z.string().min(10),
@@ -278,7 +278,7 @@ export default async function userRoutes(server: FastifyInstance) {
   // Unban user (moderator/admin)
   server.post('/:id/unban', {
     preHandler: [server.requireModerator],
-  }, async (request: FastifyRequest, reply: FastifyReply) => {
+  }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const { id } = userIdParamSchema.parse(request.params);
 
     await prisma.user.update({

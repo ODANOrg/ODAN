@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { prisma } from '../../plugins/prisma.js';
 import { NotFoundError, ForbiddenError, BadRequestError } from '../../utils/errors.js';
