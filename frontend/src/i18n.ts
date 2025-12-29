@@ -9,7 +9,22 @@ export async function getMessages(locale: Locale) {
 }
 
 export async function middleware(request: Request) {
-  const locale = request.headers.get('accept-language')?.split(',')[0] || defaultLocale;
+  const header = request.headers.get('accept-language') || '';
+  const raw = header.split(',')[0]?.trim();
+
+  let locale: Locale = defaultLocale;
+
+  if (raw) {
+    if ((locales as readonly string[]).includes(raw)) {
+      locale = raw as Locale;
+    } else {
+      const base = raw.split('-')[0];
+      if (base === 'pt') locale = 'pt-BR';
+      else if (base === 'es') locale = 'es';
+      else locale = 'en';
+    }
+  }
+
   setRequestLocale(locale);
   return { messages: await getMessages(locale) };
 }
