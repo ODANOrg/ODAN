@@ -1,5 +1,7 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
+import type { UserStats } from '@/types/backend';
+
 interface FetchOptions extends RequestInit {
   token?: string;
 }
@@ -133,8 +135,8 @@ class ApiClient {
     return response.json();
   }
 
-  async getUserStats(token: string) {
-    return this.request<{ stats: any }>(`/users/stats`, { token });
+  async getUserStats(token: string): Promise<UserStats> {
+    return this.request<{ stats: UserStats }>(`/users/stats`, { token }).then((res) => res.stats);
   }
 }
 
