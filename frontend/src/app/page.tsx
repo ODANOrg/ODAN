@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, Users, Heart, Clock, HelpCircle, HandHeart, Award } from 'lucide-react';
+import { ArrowRight, Users, Heart, Clock, HelpCircle, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { api } from '@/lib/api';
@@ -88,7 +88,7 @@ export default function HomePage() {
             <Card>
               <CardHeader>
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <HandHeart className="h-6 w-6 text-primary" />
+                  {/* <HandHeart className="h-6 w-6 text-primary" /> */}
                 </div>
                 <CardTitle>{t('home.features.volunteer.title')}</CardTitle>
                 <CardDescription>{t('home.features.volunteer.description')}</CardDescription>
