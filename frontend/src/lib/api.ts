@@ -132,6 +132,10 @@ class ApiClient {
 
     return response.json();
   }
+
+  async getUserStats(token: string) {
+    return this.request<{ stats: any }>(`/users/stats`, { token });
+  }
 }
 
 export const apiClient = new ApiClient(API_URL);

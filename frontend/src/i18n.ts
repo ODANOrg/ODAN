@@ -1,4 +1,4 @@
-import { createMiddleware, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 
 export const locales = ['en', 'pt-BR', 'es'] as const;
 export type Locale = (typeof locales)[number];
@@ -8,8 +8,8 @@ export async function getMessages(locale: Locale) {
   return (await import(`./messages/${locale}.json`)).default;
 }
 
-export const middleware = createMiddleware(async (request) => {
+export async function middleware(request: Request) {
   const locale = request.headers.get('accept-language')?.split(',')[0] || defaultLocale;
   setRequestLocale(locale);
   return { messages: await getMessages(locale) };
-});
+}
