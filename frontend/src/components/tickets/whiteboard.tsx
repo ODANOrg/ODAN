@@ -78,7 +78,7 @@ export function Whiteboard({ onSave, ticketId }: WhiteboardProps) {
     return () => {
       socket.off('whiteboard-action');
     };
-  }, [ticketId]);
+  }, [ticketId, color, strokeWidth]);
 
   useEffect(() => {
     if (contextRef.current) {

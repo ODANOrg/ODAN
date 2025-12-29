@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMutation } from '@tanstack/react-query';
@@ -166,7 +167,7 @@ export default function NewTicketPage() {
               <div className="flex flex-wrap gap-2">
                 {images.map((img, i) => (
                   <div key={i} className="relative w-20 h-20 rounded border overflow-hidden">
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <Image src={img} alt="" fill className="object-cover" />
                     <button
                       type="button"
                       className="absolute top-0 right-0 p-1 bg-destructive text-white text-xs"

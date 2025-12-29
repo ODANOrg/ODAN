@@ -12,6 +12,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'ODAN - Open Digital Assistance Network',
   description: 'Free, human, and accessible tech support from volunteers who care.',
   keywords: ['tech support', 'help', 'volunteers', 'community', 'digital assistance'],

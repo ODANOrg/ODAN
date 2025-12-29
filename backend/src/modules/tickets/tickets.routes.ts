@@ -496,9 +496,9 @@ export default async function ticketRoutes(server: FastifyInstance) {
   }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const { id } = ticketIdParamSchema.parse(request.params);
-    const _body = z.object({
-      reason: z.string().optional(),
-    }).parse(request.body);
+    // const _body = z.object({
+    //   reason: z.string().optional(),
+    // }).parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -867,9 +867,9 @@ export default async function ticketRoutes(server: FastifyInstance) {
   }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const { id } = ticketIdParamSchema.parse(request.params);
-    const _body = z.object({
-      acceptedResponseId: z.string().optional(),
-    }).parse(request.body);
+    // const _body = z.object({
+    //   acceptedResponseId: z.string().optional(),
+    // }).parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -947,9 +947,9 @@ export default async function ticketRoutes(server: FastifyInstance) {
   }, async (request: FastifyRequest, _reply: FastifyReply) => {
     const payload = request.user as JWTPayload;
     const { id } = ticketIdParamSchema.parse(request.params);
-    const body = z.object({
-      reason: z.string().optional(),
-    }).parse(request.body);
+    // const body = z.object({
+    //   reason: z.string().optional(),
+    // }).parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
