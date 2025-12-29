@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -192,11 +193,12 @@ export default function TicketDetailPage() {
               {ticket.images && ticket.images.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-4">
                   {ticket.images.map((img: string, i: number) => (
-                    <a key={i} href={img} target="_blank" rel="noreferrer">
-                      <img
+                    <a key={i} href={img} target="_blank" rel="noreferrer" className="relative h-24 w-24">
+                      <Image
                         src={img}
                         alt=""
-                        className="h-24 w-24 object-cover rounded border hover:border-primary"
+                        fill
+                        className="object-cover rounded border hover:border-primary"
                       />
                     </a>
                   ))}
@@ -242,11 +244,12 @@ export default function TicketDetailPage() {
                     {response.images && response.images.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-4">
                         {response.images.map((img: string, i: number) => (
-                          <a key={i} href={img} target="_blank" rel="noreferrer">
-                            <img
+                          <a key={i} href={img} target="_blank" rel="noreferrer" className="relative h-24 w-24">
+                            <Image
                               src={img}
                               alt=""
-                              className="h-24 w-24 object-cover rounded border"
+                              fill
+                              className="object-cover rounded border"
                             />
                           </a>
                         ))}
