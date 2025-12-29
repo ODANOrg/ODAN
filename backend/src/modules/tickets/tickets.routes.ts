@@ -106,6 +106,7 @@ export default async function ticketRoutes(server: FastifyInstance) {
   });
 
   // Create ticket
+  server.post('/', {
     preHandler: [server.authenticate],
   }, async (request: FastifyRequest, reply: FastifyReply) => {
     const payload = request.user as JWTPayload;

@@ -5,7 +5,7 @@ import { cache } from '../../plugins/redis.js';
 
 export default async function statsRoutes(server: FastifyInstance) {
   // Platform statistics (public, cached)
-  server.get('/platform', async (request: FastifyRequest) => {
+  server.get('/platform', async (_request: FastifyRequest) => {
     const cacheKey = 'stats:platform';
     
     // Try cache first
@@ -67,7 +67,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Top volunteers leaderboard (public, cached)
-  server.get('/leaderboard', async (request: FastifyRequest) => {
+  server.get('/leaderboard', async (_request: FastifyRequest) => {
     const cacheKey = 'stats:leaderboard';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -112,7 +112,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Category statistics (public, cached)
-  server.get('/categories', async (request: FastifyRequest) => {
+  server.get('/categories', async (_request: FastifyRequest) => {
     const cacheKey = 'stats:categories';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -153,7 +153,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Recent activity (public, cached)
-  server.get('/recent', async (request: FastifyRequest) => {
+  server.get('/recent', async (_request: FastifyRequest) => {
     const cacheKey = 'stats:recent';
     
     const cached = await cache.get<object[]>(cacheKey);
@@ -187,7 +187,7 @@ export default async function statsRoutes(server: FastifyInstance) {
   });
 
   // Time series stats (for charts)
-  server.get('/timeline', async (request: FastifyRequest) => {
+  server.get('/timeline', async (_request: FastifyRequest) => {
     const cacheKey = 'stats:timeline';
     
     const cached = await cache.get<object>(cacheKey);

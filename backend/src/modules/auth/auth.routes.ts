@@ -46,7 +46,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Telegram authentication
-  server.post('/telegram', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.post('/telegram', async (request: FastifyRequest, _reply: FastifyReply) => {
     const body = telegramAuthSchema.parse(request.body);
 
     if (!CONFIG.telegram.botToken) {
@@ -154,7 +154,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Google OAuth - Get authorization URL
-  server.get('/google', async (request: FastifyRequest) => {
+  server.get('/google', async (_request: FastifyRequest) => {
     if (!CONFIG.oauth.google.clientId) {
       throw new BadRequestError('Google authentication is not configured');
     }
@@ -259,7 +259,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // GitHub OAuth - Get authorization URL
-  server.get('/github', async (request: FastifyRequest) => {
+  server.get('/github', async (_request: FastifyRequest) => {
     if (!CONFIG.oauth.github.clientId) {
       throw new BadRequestError('GitHub authentication is not configured');
     }
@@ -365,7 +365,7 @@ export default async function authRoutes(server: FastifyInstance) {
   });
 
   // Twitter/X OAuth - Get authorization URL
-  server.get('/twitter', async (request: FastifyRequest) => {
+  server.get('/twitter', async (_request: FastifyRequest) => {
     if (!CONFIG.oauth.twitter.clientId) {
       throw new BadRequestError('Twitter authentication is not configured');
     }
