@@ -1,7 +1,5 @@
-import { locales, defaultLocale } from './src/i18n';
-
 export default {
-  locales,
-  defaultLocale,
+  locales: ['en', 'pt-BR', 'es'],
+  defaultLocale: 'en',
   localeDetection: true,
 };
