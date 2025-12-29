@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { api } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import { formatDuration, timeAgo } from '@/lib/utils';
-import { UserStats } from '../../../../backend/src/types';
+import { UserStats } from '@/types/backend';
 
 const statusColors: Record<string, 'default' | 'secondary' | 'success' | 'warning'> = {
   OPEN: 'default',
