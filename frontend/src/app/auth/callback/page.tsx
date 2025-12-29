@@ -1,4 +1,7 @@
-'use client';
+"use client";
+
+// Prevent Next from prerendering this route — it relies on client search params
+export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
