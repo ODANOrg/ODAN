@@ -14,9 +14,9 @@ class ApiClient {
   private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
     const { token, ...fetchOptions } = options;
 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...fetchOptions.headers,
+      ...(fetchOptions.headers as Record<string, string> | undefined),
     };
 
     if (token) {
@@ -25,7 +25,7 @@ class ApiClient {
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...fetchOptions,
-      headers,
+      headers: headers as HeadersInit,
       credentials: 'include',
     });
 

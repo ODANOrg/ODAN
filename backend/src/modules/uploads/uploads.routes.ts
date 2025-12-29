@@ -20,7 +20,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   server.post('/image', {
     preHandler: [server.authenticate],
   }, async (request: FastifyRequest) => {
-    const _payload = request.user as JWTPayload;
+    // const _payload = request.user as JWTPayload;
 
     const data = await request.file();
 
@@ -95,7 +95,7 @@ export default async function uploadRoutes(server: FastifyInstance) {
   server.post('/images', {
     preHandler: [server.authenticate],
   }, async (request: FastifyRequest) => {
-    const _payload = request.user as JWTPayload;
+    // const _payload = request.user as JWTPayload;
 
     const files = request.files();
     const results: Array<{ key: string; url: string; size: number }> = [];
