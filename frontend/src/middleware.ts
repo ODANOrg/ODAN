@@ -5,6 +5,8 @@ export default createMiddleware({
   locales,
   defaultLocale,
   localePrefix: 'as-needed',
+  // Only auto-detect on first visit; after that, respect manual changes via cookie
+  localeDetection: false,
 });
 
 export const config = {

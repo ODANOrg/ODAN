@@ -70,19 +70,22 @@ export function Header() {
     router.push(homeHref);
   };
 
-  const changeLocale = (locale: string) => {
+  const changeLocale = (newLocale: string) => {
+    // Set cookie so next-intl middleware respects manual choice
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+
     const segments = pathname.split('/');
     const hasLocale = locales.some((l) => l.code === segments[1]);
 
     // If switching to default locale (as-needed), remove the locale segment.
-    if (locale === defaultLocale) {
+    if (newLocale === defaultLocale) {
       if (hasLocale) segments.splice(1, 1);
       router.push(segments.join('/') || '/');
       return;
     }
 
-    if (hasLocale) segments[1] = locale;
-    else segments.splice(1, 0, locale);
+    if (hasLocale) segments[1] = newLocale;
+    else segments.splice(1, 0, newLocale);
     router.push(segments.join('/'));
   };
 
@@ -108,17 +111,17 @@ export function Header() {
               {
                 href: '/#como-funciona',
                 label: tNavCustom('how'),
-                active: pathname === '/' || pathname === `/${currentLocale}`,
+                active: false,
               },
               {
                 href: '/#voluntarios',
                 label: tNavCustom('volunteers'),
-                active: pathname === '/' || pathname === `/${currentLocale}`,
+                active: false,
               },
               {
-                href: '/#sobre',
+                href: '/about',
                 label: tNavCustom('about'),
-                active: pathname === '/' || pathname === `/${currentLocale}`,
+                active: pathname.includes('/about'),
               },
               {
                 href: '/tickets',

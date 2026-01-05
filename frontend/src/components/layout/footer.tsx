@@ -28,7 +28,7 @@ export function Footer() {
             <div className="flex flex-col space-y-1 text-muted-foreground">
               <Link href="/#como-funciona" className="hover:text-foreground">{t('footer.navHow')}</Link>
               <Link href="/#voluntarios" className="hover:text-foreground">{t('footer.navVolunteers')}</Link>
-              <Link href="/#sobre" className="hover:text-foreground">{t('footer.navAbout')}</Link>
+              <Link href="/about" className="hover:text-foreground">{t('footer.navAbout')}</Link>
             </div>
           </div>
           <div className="space-y-2">
@@ -36,7 +36,7 @@ export function Footer() {
             <div className="flex flex-col space-y-1 text-muted-foreground">
               <Link href="/terms" className="hover:text-foreground">{t('footer.terms')}</Link>
               <Link href="/privacy" className="hover:text-foreground">{t('footer.privacy')}</Link>
-              <Link href="/tickets/new" className="hover:text-foreground">{t('footer.contact')}</Link>
+              <Link href="/contact" className="hover:text-foreground">{t('footer.contact')}</Link>
             </div>
           </div>
           <div className="md:col-span-2 flex items-center gap-4 text-muted-foreground">

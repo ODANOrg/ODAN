@@ -363,5 +363,228 @@
     "ctaSubtitle": "En menos de 2 minutos tu ticket está publicado y un voluntario puede aceptar. Totalmente gratuito y sin burocracia.",
     "ctaPrimary": "Abrir nuevo ticket",
     "ctaSecondary": "Ver tickets"
+  },
+  "login": {
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Inicia sesión en tu cuenta para continuar",
+    "providers": {
+      "telegramLabel": "Continuar con Telegram",
+      "googleLabel": "Continuar con Google",
+      "githubLabel": "Continuar con GitHub",
+      "twitterLabel": "Continuar con X"
+    },
+    "telegramNote": "Recomendado para notificaciones gratuitas",
+    "preferredBadge": "Preferido",
+    "recommendedReasonTitle": "¿Por qué Telegram?",
+    "recommendedReasons": [
+      "Reduce costos y mantiene la plataforma sin anuncios",
+      "Notificaciones gratuitas sobre tus tickets",
+      "Privacidad mantenida sin compartir email"
+    ],
+    "noAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crear cuenta"
+  },
+  "register": {
+    "badge": "Únete a la comunidad",
+    "title": "Crea tu cuenta",
+    "subtitle": "Elige tu rol y regístrate en segundos. Notificaciones gratuitas, privacidad y transparencia.",
+    "backToLogin": "Volver al login",
+    "step1": {
+      "title": "¿Cómo quieres usar ODAN?",
+      "description": "Selecciona la opción que mejor te describe"
+    },
+    "step2": {
+      "title": "Elige cómo registrarte",
+      "description": "Selecciona tu método de autenticación preferido"
+    },
+    "roles": {
+      "user": {
+        "title": "Necesito ayuda",
+        "description": "Abrir tickets y recibir asistencia de voluntarios"
+      },
+      "volunteer": {
+        "title": "Quiero ayudar",
+        "description": "Aceptar tickets y ganar certificados verificables"
+      },
+      "both": {
+        "title": "Ambos",
+        "description": "Ayudar a otros y recibir ayuda cuando necesite"
+      }
+    },
+    "providers": {
+      "telegramLabel": "Registrar con Telegram",
+      "googleLabel": "Registrar con Google",
+      "githubLabel": "Registrar con GitHub",
+      "twitterLabel": "Registrar con X"
+    },
+    "telegramNote": "Recomendado para notificaciones gratuitas",
+    "preferredBadge": "Preferido",
+    "recommendedReasonTitle": "¿Por qué Telegram?",
+    "recommendedReasons": [
+      "Reduce costos y mantiene la plataforma sin anuncios",
+      "Notificaciones gratuitas sobre tus tickets",
+      "Privacidad mantenida sin compartir email"
+    ],
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Iniciar sesión"
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última actualización: Enero de 2026",
+    "intro": "Al usar ODAN, aceptas estos términos. Por favor léelos cuidadosamente.",
+    "sections": [
+      {
+        "title": "1. Aceptación de Términos",
+        "content": "Al acceder o usar ODAN, aceptas quedar vinculado por estos Términos de Servicio. Si no estás de acuerdo, por favor no uses nuestros servicios."
+      },
+      {
+        "title": "2. Descripción del Servicio",
+        "content": "ODAN es una plataforma gratuita y de código abierto que conecta personas buscando ayuda tecnológica con voluntarios. Facilitamos la comunicación pero no garantizamos la calidad o precisión de la asistencia proporcionada."
+      },
+      {
+        "title": "3. Responsabilidades del Usuario",
+        "content": "Aceptas usar ODAN de manera respetuosa y legal. No debes compartir contenido ilegal, acosar usuarios o hacer mal uso de la plataforma. Los voluntarios deben proporcionar asistencia honesta y de buena fe."
+      },
+      {
+        "title": "4. Privacidad y Datos",
+        "content": "Recopilamos los datos mínimos necesarios para operar el servicio. Los mensajes de chat no se almacenan permanentemente. Consulta nuestra Política de Privacidad para más detalles."
+      },
+      {
+        "title": "5. Propiedad Intelectual",
+        "content": "ODAN es software de código abierto. El contenido generado por el usuario sigue siendo propiedad de sus creadores, pero al publicar nos otorgas licencia para mostrarlo en la plataforma."
+      },
+      {
+        "title": "6. Limitación de Responsabilidad",
+        "content": "ODAN se proporciona 'tal cual' sin garantías. No somos responsables de ningún daño derivado del uso de la plataforma o consejos recibidos a través de ella."
+      },
+      {
+        "title": "7. Cambios en los Términos",
+        "content": "Podemos actualizar estos términos periódicamente. El uso continuado después de los cambios constituye aceptación de los nuevos términos."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización: Enero de 2026",
+    "intro": "Tu privacidad es importante para nosotros. Esta política explica cómo recopilamos, usamos y protegemos tu información.",
+    "sections": [
+      {
+        "title": "1. Información que Recopilamos",
+        "content": "Recopilamos información que proporcionas al registrarte (nombre, email si usas proveedores que no sean Telegram) y datos básicos de uso. Los mensajes de chat se procesan pero no se almacenan permanentemente."
+      },
+      {
+        "title": "2. Cómo Usamos la Información",
+        "content": "Usamos tu información para proporcionar y mejorar nuestros servicios, enviar notificaciones sobre tus tickets y generar certificados de voluntario."
+      },
+      {
+        "title": "3. Compartir Datos",
+        "content": "No vendemos tus datos. Podemos compartir estadísticas anonimizadas públicamente. La información de certificados de voluntarios es públicamente verificable por diseño."
+      },
+      {
+        "title": "4. Seguridad de Datos",
+        "content": "Implementamos medidas de seguridad razonables para proteger tu información. Sin embargo, ningún sistema es completamente seguro."
+      },
+      {
+        "title": "5. Tus Derechos",
+        "content": "Puedes solicitar acceso, corrección o eliminación de tus datos personales contactándonos. Los certificados de voluntario no pueden eliminarse debido a su naturaleza verificable."
+      },
+      {
+        "title": "6. Cookies",
+        "content": "Usamos cookies esenciales para autenticación y preferencias de idioma. No usamos cookies de seguimiento o publicidad."
+      },
+      {
+        "title": "7. Contacto",
+        "content": "Para preguntas relacionadas con privacidad, contáctanos a través de la página de Contacto o abre un ticket."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¿Tienes preguntas, comentarios o necesitas soporte? Estamos aquí para ayudar.",
+    "form": {
+      "title": "Enviar un Mensaje",
+      "description": "Completa el formulario y te responderemos pronto.",
+      "name": "Tu Nombre",
+      "email": "Tu Email",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "submit": "Enviar Mensaje",
+      "successTitle": "¡Mensaje Enviado!",
+      "successMessage": "Gracias por contactarnos. Responderemos lo antes posible."
+    },
+    "channels": {
+      "telegram": {
+        "title": "Soporte Telegram",
+        "description": "Únete a nuestro grupo de soporte en Telegram para ayuda rápida de la comunidad.",
+        "button": "Unirse a Telegram"
+      },
+      "github": {
+        "title": "Issues en GitHub",
+        "description": "Reporta bugs o solicita funciones en nuestro repositorio GitHub.",
+        "button": "Abrir Issue"
+      },
+      "faq": {
+        "title": "Preguntas Frecuentes",
+        "description": "Encuentra respuestas a preguntas comunes sobre usar ODAN.",
+        "button": "Ver FAQ"
+      }
+    }
+  },
+  "about": {
+    "badge": "Sobre Nosotros",
+    "title": "Open Digital Assistance Network",
+    "subtitle": "Una plataforma gratuita y de código abierto conectando personas que necesitan ayuda tecnológica con voluntarios que se preocupan.",
+    "mission": {
+      "title": "Nuestra Misión",
+      "content": "Democratizar el acceso al soporte técnico creando una plataforma transparente, segura y centrada en el humano donde todos pueden recibir ayuda y cualquiera puede ser voluntario."
+    },
+    "valuesTitle": "Nuestros Valores",
+    "values": [
+      {
+        "title": "Accesibilidad",
+        "description": "Ayuda tecnológica gratuita para todos, sin importar ingresos o ubicación.",
+        "icon": "globe"
+      },
+      {
+        "title": "Transparencia",
+        "description": "Código abierto, certificados verificables y procesos auditables.",
+        "icon": "shield"
+      },
+      {
+        "title": "Comunidad",
+        "description": "Construido por voluntarios, para todos. Sin anuncios, sin agendas ocultas.",
+        "icon": "users"
+      },
+      {
+        "title": "Reconocimiento",
+        "description": "Los voluntarios ganan certificados verificables por sus contribuciones.",
+        "icon": "award"
+      },
+      {
+        "title": "Privacidad",
+        "description": "Recolección mínima de datos, sin seguimiento, mensajes no almacenados permanentemente.",
+        "icon": "shield"
+      },
+      {
+        "title": "Innovación",
+        "description": "Herramientas modernas como pizarra y editor rico para mejor asistencia.",
+        "icon": "sparkles"
+      }
+    ],
+    "story": {
+      "title": "Cómo Empezó",
+      "content": "ODAN nació de la creencia de que la ayuda tecnológica no debería costar dinero ni venir con condiciones. Vimos personas luchando con problemas técnicos y voluntarios dispuestos a ayudar, pero sin una forma fácil de conectarlos de manera segura. Así que lo construimos: una plataforma con chat en vivo, certificados para voluntarios y moderación para mantener a todos seguros."
+    },
+    "openSource": {
+      "title": "100% Código Abierto",
+      "description": "Todo nuestro código es público. Audítalo, contribuye o haz fork.",
+      "button": "Ver en GitHub"
+    },
+    "cta": {
+      "title": "¿Listo para Unirte?",
+      "description": "Ya sea que necesites ayuda o quieras ser voluntario, hay un lugar para ti aquí.",
+      "volunteer": "Ser Voluntario",
+      "getHelp": "Necesito Ayuda"
+    }
   }
 }
