@@ -55,14 +55,14 @@ export default function HomePage() {
   }));
 
   const formatNumber = (value: number, fallback: string) => {
-    if (!value) return fallback;
+    if (value === undefined || value === null) return fallback;
     return new Intl.NumberFormat('pt-BR').format(value);
   };
 
   const statItems: StatItem[] = [
-    { label: t('activeTickets'), value: stats?.ticketsResolved || 2345, fallback: '2.345' },
-    { label: t('volunteers'), value: stats?.volunteers || 1234, fallback: '1.234' },
-    { label: t('hours'), value: stats?.hoursSpent || 34567, fallback: '34.567' },
+    { label: t('activeTickets'), value: stats?.openTickets ?? 2345, fallback: '2.345' },
+    { label: t('volunteers'), value: stats?.totalVolunteers ?? stats?.volunteers ?? 1234, fallback: '1.234' },
+    { label: t('hours'), value: stats?.totalHoursVolunteered ?? stats?.hoursSpent ?? 34567, fallback: '34.567' },
   ];
 
   useEffect(() => {

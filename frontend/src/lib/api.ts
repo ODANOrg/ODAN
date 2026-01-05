@@ -142,7 +142,16 @@ class ApiClient {
   async getStats(): Promise<PlatformStats | null> {
     try {
       const res = await this.request<{ data: PlatformStats }>(`/stats/platform`);
-      return res.data || null;
+      const data = res.data;
+      if (!data) return null;
+
+      // Normalize a couple of legacy keys still used by the UI.
+      return {
+        ...data,
+        volunteers: data.volunteers ?? data.totalVolunteers,
+        hoursSpent: data.hoursSpent ?? data.totalHoursVolunteered,
+        peopleHelped: data.peopleHelped ?? data.totalPeopleHelped,
+      };
     } catch (err) {
       return null;
     }
