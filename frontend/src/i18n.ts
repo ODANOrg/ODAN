@@ -10,9 +10,10 @@ export async function getMessages(locale: Locale) {
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
-  const locale = (locales as readonly string[]).includes(requested)
-    ? (requested as Locale)
-    : defaultLocale;
+  const locale =
+    typeof requested === 'string' && (locales as readonly string[]).includes(requested)
+      ? (requested as Locale)
+      : defaultLocale;
 
   return {
     locale,
