@@ -47,6 +47,7 @@ const locales = [
 export function Header() {
   const tNav = useTranslations('nav');
   const tNavCustom = useTranslations('navCustom');
+  const tCommon = useTranslations('common');
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
@@ -70,22 +71,27 @@ export function Header() {
     router.push(homeHref);
   };
 
-  const changeLocale = (newLocale: string) => {
-    // Set cookie so next-intl middleware respects manual choice
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+  const changeLocale = (locale: string) => {
+    // Persist user choice so locale auto-detection only happens on first visit.
+    // next-intl middleware reads `NEXT_LOCALE` by default.
+    try {
+      document.cookie = `NEXT_LOCALE=${encodeURIComponent(locale)}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    } catch {
+      // ignore
+    }
 
     const segments = pathname.split('/');
     const hasLocale = locales.some((l) => l.code === segments[1]);
 
     // If switching to default locale (as-needed), remove the locale segment.
-    if (newLocale === defaultLocale) {
+    if (locale === defaultLocale) {
       if (hasLocale) segments.splice(1, 1);
       router.push(segments.join('/') || '/');
       return;
     }
 
-    if (hasLocale) segments[1] = newLocale;
-    else segments.splice(1, 0, newLocale);
+    if (hasLocale) segments[1] = locale;
+    else segments.splice(1, 0, locale);
     router.push(segments.join('/'));
   };
 
@@ -109,14 +115,14 @@ export function Header() {
                 active: pathname === '/' || pathname === `/${currentLocale}`,
               },
               {
-                href: '/#como-funciona',
+                href: '/how-it-works',
                 label: tNavCustom('how'),
-                active: false,
+                active: pathname.includes('/how-it-works'),
               },
               {
-                href: '/#voluntarios',
+                href: '/volunteers',
                 label: tNavCustom('volunteers'),
-                active: false,
+                active: pathname.includes('/volunteers'),
               },
               {
                 href: '/about',
@@ -184,7 +190,7 @@ export function Header() {
           >
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">{tCommon('toggleTheme')}</span>
           </Button>
 
           {/* User Menu */}
@@ -244,7 +250,7 @@ export function Header() {
                   <Link href="/login">{tNav('signIn')}</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/login?mode=signup">
+                  <Link href="/register">
                     <Sparkles className="mr-1 h-4 w-4" />
                     {tNav('signUp')}
                   </Link>

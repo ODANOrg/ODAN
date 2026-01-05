@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
-export default async function AboutPage() {
-  const t = await getTranslations('pages.about');
+export default async function HowItWorksPage() {
+  const t = await getTranslations('pages.howItWorks');
   const sections = t.raw('sections') as { title: string; body: string[] }[];
 
   return (
@@ -26,4 +26,3 @@ export default async function AboutPage() {
     </div>
   );
 }
-

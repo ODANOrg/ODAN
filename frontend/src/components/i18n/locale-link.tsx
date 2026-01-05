@@ -9,7 +9,7 @@ type Props = Omit<ComponentProps<typeof NextLink>, 'href'> & {
   href: string;
 };
 
-function localizeHref(href: string, locale: string) {
+export function localizeHref(href: string, locale: string) {
   if (
     href.startsWith('http://') ||
     href.startsWith('https://') ||

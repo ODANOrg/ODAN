@@ -14,7 +14,7 @@ export function Footer() {
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm font-semibold">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">O</div>
-            <span>ODAN - Open Digital Assistance Network</span>
+            <span>{t('footer.brand')}</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xl">
               {t('footer.tagline')}
@@ -26,8 +26,8 @@ export function Footer() {
           <div className="space-y-2">
             <p className="font-semibold text-foreground">{t('footer.navHow')}</p>
             <div className="flex flex-col space-y-1 text-muted-foreground">
-              <Link href="/#como-funciona" className="hover:text-foreground">{t('footer.navHow')}</Link>
-              <Link href="/#voluntarios" className="hover:text-foreground">{t('footer.navVolunteers')}</Link>
+              <Link href="/how-it-works" className="hover:text-foreground">{t('footer.navHow')}</Link>
+              <Link href="/volunteers" className="hover:text-foreground">{t('footer.navVolunteers')}</Link>
               <Link href="/about" className="hover:text-foreground">{t('footer.navAbout')}</Link>
             </div>
           </div>

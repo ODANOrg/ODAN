@@ -2,7 +2,7 @@
 
 import Link from '@/components/i18n/locale-link';
 import { useTranslations } from 'next-intl';
-import { MessageSquare, Github, Chrome, ShieldCheck, Sparkles } from 'lucide-react';
+import { MessageSquare, Github, Chrome, ShieldCheck, ArrowRight, Users, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -16,7 +16,7 @@ const twitterIcon = ({ className }: { className?: string }) => (
 );
 
 export default function LoginPage() {
-  const t = useTranslations('login');
+  const t = useTranslations('auth');
 
   const providers = [
     {
@@ -51,20 +51,61 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12">
-      <div className="container max-w-md">
-        <Card className="relative">
+    <div className="min-h-[calc(100vh-6rem)] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      <div className="container grid gap-10 py-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="flex flex-col justify-center space-y-6 text-white">
+          <Badge variant="outline" className="w-fit border-white/30 bg-white/10 text-white">
+            {t('loginHeroBadge')}
+          </Badge>
+          <div className="space-y-3">
+            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+              {t('loginHeroTitle')}
+            </h1>
+            <p className="text-lg text-white/80 max-w-2xl">
+              {t('loginHeroSubtitle')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Card className="bg-white/5 border-white/10 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">{t('cards.user.title')}</CardTitle>
+                <CardDescription className="text-white/70">
+                  {t('cards.user.subtitle')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center gap-2 text-sm text-white/70">
+                <Users className="h-4 w-4" />
+                {t('cards.user.bullet')}
+              </CardContent>
+            </Card>
+            <Card className="bg-white/5 border-white/10 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">{t('cards.volunteer.title')}</CardTitle>
+                <CardDescription className="text-white/70">
+                  {t('cards.volunteer.subtitle')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center gap-2 text-sm text-white/70">
+                <Sparkles className="h-4 w-4" />
+                {t('cards.volunteer.bullet')}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <Card className="relative card-pop">
           <div className="absolute inset-x-6 top-0 h-1 rounded-full bg-gradient-to-r from-primary via-sky-400 to-primary" />
           <CardHeader className="text-center space-y-3 pt-6">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <span className="text-2xl font-bold">O</span>
             </div>
-            <CardTitle className="text-2xl">{t('title')}</CardTitle>
-            <CardDescription>{t('subtitle')}</CardDescription>
+            <CardTitle className="text-2xl">{t('loginTitle')}</CardTitle>
+            <CardDescription>{t('loginSubtitle')}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             {providers.map((provider) => (
-              <div key={provider.id}>
+              <div key={provider.id} className="space-y-2">
                 <Button
                   variant="outline"
                   className="w-full justify-start gap-3 border-muted-foreground/20 text-left h-auto py-3"
@@ -90,7 +131,7 @@ export default function LoginPage() {
                   )}
                 </Button>
                 {provider.recommended && (
-                  <div className="mt-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+                  <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
                     <div className="flex items-center gap-2 font-semibold">
                       <ShieldCheck className="h-4 w-4" />
                       {t('recommendedReasonTitle')}
@@ -105,15 +146,10 @@ export default function LoginPage() {
               </div>
             ))}
 
-            <Separator />
-
             <p className="text-center text-sm text-muted-foreground">
               {t('noAccount')}{' '}
               <Button variant="link" className="px-1" asChild>
-                <Link href="/register">
-                  <Sparkles className="mr-1 h-3 w-3" />
-                  {t('createAccount')}
-                </Link>
+                <Link href="/register">{t('createAccount')}</Link>
               </Button>
             </p>
           </CardContent>
