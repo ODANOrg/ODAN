@@ -16,6 +16,7 @@ import {
   User,
   LogOut,
   Globe,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -44,6 +45,7 @@ const locales = [
 
 export function Header() {
   const t = useTranslations();
+  const tNav = useTranslations('navCustom');
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
@@ -93,35 +95,55 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 ml-6">
-          <Link
-            href="/"
-            className={cn(
-              'text-sm font-medium transition-colors hover:text-primary',
-              pathname === '/' ? 'text-primary' : 'text-muted-foreground'
-            )}
-          >
-            {t('nav.home')}
-          </Link>
-          <Link
-            href="/tickets"
-            className={cn(
-              'text-sm font-medium transition-colors hover:text-primary',
-              pathname.includes('/tickets') ? 'text-primary' : 'text-muted-foreground'
-            )}
-          >
-            {t('nav.tickets')}
-          </Link>
-          {isAuthenticated && (
-            <Link
-              href="/certificates"
-              className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
-                pathname.includes('/certificates') ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              {t('nav.certificates')}
-            </Link>
-          )}
+          {[{
+            href: '/',
+            label: t('nav.home'),
+            active: pathname === '/',
+          },
+          {
+            href: '/#como-funciona',
+            label: tNav('how'),
+            active: pathname.includes('#como-funciona'),
+          },
+          {
+            href: '/#voluntarios',
+            label: tNav('volunteers'),
+            active: pathname.includes('#voluntarios'),
+          },
+          {
+            href: '/#sobre',
+            label: tNav('about'),
+            active: pathname.includes('#sobre'),
+          },
+          {
+            href: '/tickets',
+            label: t('nav.tickets'),
+            active: pathname.includes('/tickets'),
+          },
+          isAuthenticated
+            ? {
+                href: '/certificates',
+                label: t('nav.certificates'),
+                active: pathname.includes('/certificates'),
+              }
+            : null,
+          ]
+            .filter(Boolean)
+            .map((item) => {
+              const navItem = item as { href: string; label: string; active: boolean };
+              return (
+                <Link
+                  key={navItem.href}
+                  href={navItem.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors hover:text-primary',
+                    navItem.active ? 'text-primary' : 'text-muted-foreground'
+                  )}
+                >
+                  {navItem.label}
+                </Link>
+              );
+            })}
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
@@ -205,9 +227,22 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild size="sm">
-              <Link href="/login">{t('nav.login')}</Link>
-            </Button>
+            <>
+              <div className="hidden md:flex items-center gap-2">
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/login">Entrar</Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href="/login?mode=signup">
+                    <Sparkles className="mr-1 h-4 w-4" />
+                    Criar Conta
+                  </Link>
+                </Button>
+              </div>
+              <Button asChild size="sm" className="md:hidden">
+                <Link href="/login">Entrar</Link>
+              </Button>
+            </>
           )}
         </div>
       </div>

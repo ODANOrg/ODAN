@@ -18,16 +18,47 @@
     "and": "e"
   },
   "nav": {
-    "home": "Início",
-    "tickets": "Chamados",
-    "newTicket": "Novo Chamado",
-    "dashboard": "Painel",
-    "profile": "Perfil",
-    "certificates": "Certificados",
-    "login": "Entrar",
-    "logout": "Sair",
-    "settings": "Configurações"
-  },
+    "loginTitle": "Bem-vindo ao ODAN",
+    "loginSubtitle": "Escolha como você quer entrar",
+    "telegramNote": "Recomendamos o Telegram para a melhor experiência - notificações gratuitas sem anúncios!",
+    "continueWith": "Continuar com {provider}",
+    "providers": {
+      "telegram": "Telegram",
+      "google": "Google",
+      "github": "GitHub",
+      "twitter": "X (Twitter)",
+      "telegramLabel": "Continuar com Telegram",
+      "googleLabel": "Continuar com Google",
+      "githubLabel": "Continuar com GitHub",
+      "twitterLabel": "Continuar com X"
+    },
+    "heroBadge": "Sem anúncios, foco na ajuda",
+    "heroTitle": "Crie sua conta em segundos",
+    "heroSubtitle": "Escolha Telegram (recomendado) ou o provedor que preferir. Notificações gratuitas, privacidade e transparência em todos os atendimentos.",
+    "cards": {
+      "user": {
+        "title": "Para quem precisa de ajuda",
+        "subtitle": "Abrir chamados, anexar imagens e conversar em tempo real com voluntários.",
+        "bullet": "Notificações via Telegram ou email."
+      },
+      "volunteer": {
+        "title": "Para voluntários",
+        "subtitle": "Aceite chamados, use editor rico + whiteboard e gere certificados verificáveis.",
+        "bullet": "Horas e impacto registrados."
+      }
+    },
+    "recommendedReasonTitle": "Por que Telegram?",
+    "recommendedReasons": [
+      "Reduz custos e mantém a plataforma sem anúncios.",
+      "Notificações gratuitas sobre seus chamados.",
+      "Privacidade mantida sem compartilhar email."
+    ],
+    "rolePrompt": "Como você quer usar o ODAN?",
+    "roleHelp": "Preciso de ajuda",
+    "roleVolunteer": "Quero ajudar",
+    "roleBoth": "Ambos",
+    "already": "Já tem conta?",
+    "enter": "Entrar"
   "home": {
     "title": "Ajuda Digital para Todos",
     "subtitle": "Suporte técnico gratuito, humano e acessível de voluntários que se importam.",
@@ -191,6 +222,95 @@
     "privacy": "Política de Privacidade",
     "terms": "Termos de Uso",
     "github": "GitHub",
+    "contact": "Contato",
+    "navHow": "Como funciona",
+    "navVolunteers": "Para voluntários",
+    "navAbout": "Sobre",
     "copyright": "© {year} ODAN. Livre e código aberto."
+  },
+  "navCustom": {
+    "how": "Como funciona",
+    "volunteers": "Para voluntários",
+    "about": "Sobre"
+  },
+  "landing": {
+    "badge": "Comunidade global, cuidado humano",
+    "title": "Ajuda tecnológica humana, gratuita e acessível",
+    "subtitle": "Conectamos pessoas com dificuldades tecnológicas a voluntários certificados que orientam ao vivo, com transparência e segurança.",
+    "ctaHelp": "Preciso de ajuda",
+    "ctaVolunteer": "Quero ser voluntário",
+    "badgeNoAds": "Sem anúncios",
+    "badgeTelegram": "Notificações via Telegram",
+    "badgeCert": "Certificação verificável",
+    "quickTitle": "Fluxo rápido",
+    "quickSubtitle": "Abra um chamado, receba um voluntário, acompanhe ao vivo.",
+    "activeTickets": "Chamados ativos",
+    "hours": "Horas dedicadas",
+    "volunteers": "Voluntários",
+    "privacy": "Mensagens não são armazenadas permanentemente.",
+    "stepsTitle": "Como funciona",
+    "stepsSubtitle": "Em minutos você descreve, recebe um voluntário e acompanha todo o passo a passo.",
+    "steps": [
+      {
+        "title": "Descreva seu problema",
+        "description": "Abra um chamado com texto, anexos e contexto claro."
+      },
+      {
+        "title": "Receba ajuda humana",
+        "description": "Um voluntário aceita e orienta você passo a passo."
+      },
+      {
+        "title": "Problema resolvido",
+        "description": "Aprenda, resolva com segurança e avalie a experiência."
+      }
+    ],
+    "volunteersBadge": "Voluntários",
+    "volunteersTitle": "Para quem quer ajudar",
+    "volunteersSubtitle": "Registre horas, gere certificados e acompanhe impacto real. Whiteboard, editor rico e chat seguro prontos para você colaborar.",
+    "stats": {
+      "hours": "Horas dedicadas",
+      "tickets": "Chamados concluídos",
+      "rating": "Avaliação média",
+      "certs": "Certificados"
+    },
+    "ctaVolunteerPrimary": "Quero ser voluntário",
+    "ctaVolunteerSecondary": "Gerar certificado",
+    "toolsTitle": "Editor e whiteboard lado a lado",
+    "toolsSubtitle": "Responda com texto rico, imagens, tempo cronometrado e quadro branco inserido na resposta.",
+    "toolsEditorNote": "Ao colar conteúdo, pedimos a fonte para manter transparência.",
+    "toolsWhiteboardNote": "Desenhe, adicione formas e envie para a resposta.",
+    "reasonsTitle": "Por que ODAN?",
+    "reasonsSubtitle": "Diferenciais que mantêm a experiência humana, segura e verificável.",
+    "reasons": [
+      {
+        "title": "100% gratuito",
+        "description": "Sempre livre de anúncios ou custos escondidos."
+      },
+      {
+        "title": "Privacidade garantida",
+        "description": "Conteúdo sensível protegido com fluxo de moderação."
+      },
+      {
+        "title": "Transparência total",
+        "description": "Atendimentos registrados e certificados verificáveis."
+      },
+      {
+        "title": "Certificação verificável",
+        "description": "Geração de certificados auditáveis para voluntários."
+      }
+    ],
+    "transparencyBadge": "Transparência",
+    "transparencyTitle": "Estatísticas em tempo real",
+    "transparencySubtitle": "Dados auditáveis, certificados com QR Code e registro em blockchain para comprovar impacto e segurança.",
+    "flows": {
+      "user": "Landing → Criar conta → Abrir chamado → Notificações → Resposta → Chat → Avaliação.",
+      "volunteer": "Landing → Criar conta → Chamados disponíveis → Aceitar → Editor + Whiteboard → Publicar → Certificar.",
+      "verify": "Certificado com QR → Página pública de validação → Link de blockchain."
+    },
+    "ctaBadge": "Pronto para usar",
+    "ctaTitle": "Abra um chamado agora",
+    "ctaSubtitle": "Em menos de 2 minutos seu chamado está publicado e um voluntário pode aceitar. Totalmente gratuito e sem burocracia.",
+    "ctaPrimary": "Abrir novo chamado",
+    "ctaSecondary": "Ver chamados"
   }
 }

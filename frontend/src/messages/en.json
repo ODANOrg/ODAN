@@ -18,16 +18,47 @@
     "and": "and"
   },
   "nav": {
-    "home": "Home",
-    "tickets": "Tickets",
-    "newTicket": "New Ticket",
-    "dashboard": "Dashboard",
-    "profile": "Profile",
-    "certificates": "Certificates",
-    "login": "Login",
-    "logout": "Logout",
-    "settings": "Settings"
-  },
+    "loginTitle": "Welcome to ODAN",
+    "loginSubtitle": "Choose how you want to sign in",
+    "telegramNote": "We recommend Telegram for the best experience - free notifications without ads!",
+    "continueWith": "Continue with {provider}",
+    "providers": {
+      "telegram": "Telegram",
+      "google": "Google",
+      "github": "GitHub",
+      "twitter": "X (Twitter)",
+      "telegramLabel": "Continue with Telegram",
+      "googleLabel": "Continue with Google",
+      "githubLabel": "Continue with GitHub",
+      "twitterLabel": "Continue with X"
+    },
+    "heroBadge": "Ad-free, focused on help",
+    "heroTitle": "Create your account in seconds",
+    "heroSubtitle": "Pick Telegram (recommended) or your favorite provider. Free notifications, privacy and transparency in every ticket.",
+    "cards": {
+      "user": {
+        "title": "For those who need help",
+        "subtitle": "Open tickets, attach images and chat live with volunteers.",
+        "bullet": "Notifications via Telegram or email."
+      },
+      "volunteer": {
+        "title": "For volunteers",
+        "subtitle": "Accept tickets, use rich editor + whiteboard and generate verifiable certificates.",
+        "bullet": "Hours and impact recorded."
+      }
+    },
+    "recommendedReasonTitle": "Why Telegram?",
+    "recommendedReasons": [
+      "Lower costs and no ads to keep the platform free.",
+      "Free notifications about your tickets.",
+      "Privacy maintained without sharing email."
+    ],
+    "rolePrompt": "How do you want to use ODAN?",
+    "roleHelp": "I need help",
+    "roleVolunteer": "I want to help",
+    "roleBoth": "Both",
+    "already": "Already have an account?",
+    "enter": "Sign in"
   "home": {
     "title": "Digital Help for Everyone",
     "subtitle": "Free, human, and accessible tech support from volunteers who care.",
@@ -191,6 +222,95 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "github": "GitHub",
+    "contact": "Contact",
+    "navHow": "How it works",
+    "navVolunteers": "For volunteers",
+    "navAbout": "About",
     "copyright": "© {year} ODAN. Free and open source."
+  },
+  "navCustom": {
+    "how": "How it works",
+    "volunteers": "For volunteers",
+    "about": "About"
+  },
+  "landing": {
+    "badge": "Global community, human care",
+    "title": "Human, free and accessible tech help",
+    "subtitle": "We connect people with tech difficulties to verified volunteers who guide live with transparency and safety.",
+    "ctaHelp": "I need help",
+    "ctaVolunteer": "I want to volunteer",
+    "badgeNoAds": "No ads",
+    "badgeTelegram": "Telegram notifications",
+    "badgeCert": "Verifiable certification",
+    "quickTitle": "Fast flow",
+    "quickSubtitle": "Open a ticket, get a volunteer, follow live.",
+    "activeTickets": "Active tickets",
+    "hours": "Hours dedicated",
+    "volunteers": "Volunteers",
+    "privacy": "Messages are not stored permanently.",
+    "stepsTitle": "How it works",
+    "stepsSubtitle": "In minutes you describe, receive a volunteer and follow every step.",
+    "steps": [
+      {
+        "title": "Describe your problem",
+        "description": "Open a ticket with text, attachments and clear context."
+      },
+      {
+        "title": "Get human help",
+        "description": "A volunteer accepts and guides you step by step."
+      },
+      {
+        "title": "Problem solved",
+        "description": "Learn, solve safely and rate the experience."
+      }
+    ],
+    "volunteersBadge": "Volunteers",
+    "volunteersTitle": "For those who want to help",
+    "volunteersSubtitle": "Track hours, generate certificates and see real impact. Whiteboard, rich editor and secure chat ready for you.",
+    "stats": {
+      "hours": "Hours dedicated",
+      "tickets": "Tickets closed",
+      "rating": "Average rating",
+      "certs": "Certificates"
+    },
+    "ctaVolunteerPrimary": "I want to volunteer",
+    "ctaVolunteerSecondary": "Generate certificate",
+    "toolsTitle": "Editor and whiteboard side by side",
+    "toolsSubtitle": "Reply with rich text, images, tracked time and a whiteboard you can insert into the response.",
+    "toolsEditorNote": "When pasting content we ask for the source to keep transparency.",
+    "toolsWhiteboardNote": "Draw, add shapes and send to the response.",
+    "reasonsTitle": "Why ODAN?",
+    "reasonsSubtitle": "Differentials that keep the experience human, safe and verifiable.",
+    "reasons": [
+      {
+        "title": "100% free",
+        "description": "Always ad-free and without hidden costs."
+      },
+      {
+        "title": "Privacy guaranteed",
+        "description": "Sensitive content protected with moderation flows."
+      },
+      {
+        "title": "Full transparency",
+        "description": "Tickets recorded and certificates verifiable."
+      },
+      {
+        "title": "Verifiable certification",
+        "description": "Auditable certificates for volunteers."
+      }
+    ],
+    "transparencyBadge": "Transparency",
+    "transparencyTitle": "Real-time statistics",
+    "transparencySubtitle": "Auditable data, QR-coded certificates and blockchain records to prove impact and safety.",
+    "flows": {
+      "user": "Landing → Create account → Open ticket → Notifications → Response → Chat → Rating.",
+      "volunteer": "Landing → Create account → Available tickets → Accept → Editor + Whiteboard → Publish → Certify.",
+      "verify": "Certificate with QR → Public validation page → Blockchain link."
+    },
+    "ctaBadge": "Ready to use",
+    "ctaTitle": "Open a ticket now",
+    "ctaSubtitle": "In under 2 minutes your ticket is live and a volunteer can accept. Completely free and no bureaucracy.",
+    "ctaPrimary": "Open new ticket",
+    "ctaSecondary": "View tickets"
   }
 }

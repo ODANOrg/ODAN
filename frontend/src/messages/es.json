@@ -18,16 +18,47 @@
     "and": "y"
   },
   "nav": {
-    "home": "Inicio",
-    "tickets": "Tickets",
-    "newTicket": "Nuevo Ticket",
-    "dashboard": "Panel",
-    "profile": "Perfil",
-    "certificates": "Certificados",
-    "login": "Entrar",
-    "logout": "Salir",
-    "settings": "Configuración"
-  },
+    "loginTitle": "Bienvenido a ODAN",
+    "loginSubtitle": "Elige cómo quieres entrar",
+    "telegramNote": "Recomendamos Telegram para la mejor experiencia: notificaciones gratuitas sin anuncios",
+    "continueWith": "Continuar con {provider}",
+    "providers": {
+      "telegram": "Telegram",
+      "google": "Google",
+      "github": "GitHub",
+      "twitter": "X (Twitter)",
+      "telegramLabel": "Continuar con Telegram",
+      "googleLabel": "Continuar con Google",
+      "githubLabel": "Continuar con GitHub",
+      "twitterLabel": "Continuar con X"
+    },
+    "heroBadge": "Sin anuncios, foco en la ayuda",
+    "heroTitle": "Crea tu cuenta en segundos",
+    "heroSubtitle": "Elige Telegram (recomendado) o tu proveedor favorito. Notificaciones gratuitas, privacidad y transparencia en cada atención.",
+    "cards": {
+      "user": {
+        "title": "Para quien necesita ayuda",
+        "subtitle": "Abrir tickets, adjuntar imágenes y chatear en vivo con voluntarios.",
+        "bullet": "Notificaciones por Telegram o email."
+      },
+      "volunteer": {
+        "title": "Para voluntarios",
+        "subtitle": "Aceptar tickets, usar editor rico + pizarra y generar certificados verificables.",
+        "bullet": "Horas e impacto registrados."
+      }
+    },
+    "recommendedReasonTitle": "¿Por qué Telegram?",
+    "recommendedReasons": [
+      "Reduce costos y mantiene la plataforma sin anuncios.",
+      "Notificaciones gratuitas sobre tus tickets.",
+      "Privacidad mantenida sin compartir email."
+    ],
+    "rolePrompt": "¿Cómo quieres usar ODAN?",
+    "roleHelp": "Necesito ayuda",
+    "roleVolunteer": "Quiero ayudar",
+    "roleBoth": "Ambos",
+    "already": "¿Ya tienes cuenta?",
+    "enter": "Entrar"
   "home": {
     "title": "Ayuda Digital para Todos",
     "subtitle": "Soporte técnico gratuito, humano y accesible de voluntarios que se preocupan.",
@@ -191,6 +222,95 @@
     "privacy": "Política de Privacidad",
     "terms": "Términos de Servicio",
     "github": "GitHub",
+    "contact": "Contacto",
+    "navHow": "Cómo funciona",
+    "navVolunteers": "Para voluntarios",
+    "navAbout": "Sobre",
     "copyright": "© {year} ODAN. Libre y de código abierto."
+  },
+  "navCustom": {
+    "how": "Cómo funciona",
+    "volunteers": "Para voluntarios",
+    "about": "Sobre"
+  },
+  "landing": {
+    "badge": "Comunidad global, cuidado humano",
+    "title": "Ayuda tecnológica humana, gratuita y accesible",
+    "subtitle": "Conectamos personas con dificultades tecnológicas a voluntarios certificados que guían en vivo, con transparencia y seguridad.",
+    "ctaHelp": "Necesito ayuda",
+    "ctaVolunteer": "Quiero ser voluntario",
+    "badgeNoAds": "Sin anuncios",
+    "badgeTelegram": "Notificaciones por Telegram",
+    "badgeCert": "Certificación verificable",
+    "quickTitle": "Flujo rápido",
+    "quickSubtitle": "Abre un ticket, recibe un voluntario, sigue en vivo.",
+    "activeTickets": "Tickets activos",
+    "hours": "Horas dedicadas",
+    "volunteers": "Voluntarios",
+    "privacy": "Los mensajes no se almacenan permanentemente.",
+    "stepsTitle": "Cómo funciona",
+    "stepsSubtitle": "En minutos describes, recibes un voluntario y sigues cada paso.",
+    "steps": [
+      {
+        "title": "Describe tu problema",
+        "description": "Abre un ticket con texto, adjuntos y contexto claro."
+      },
+      {
+        "title": "Recibe ayuda humana",
+        "description": "Un voluntario acepta y te guía paso a paso."
+      },
+      {
+        "title": "Problema resuelto",
+        "description": "Aprende, resuelve con seguridad y evalúa la experiencia."
+      }
+    ],
+    "volunteersBadge": "Voluntarios",
+    "volunteersTitle": "Para quienes quieren ayudar",
+    "volunteersSubtitle": "Registra horas, genera certificados y ve el impacto real. Whiteboard, editor rico y chat seguro listos para colaborar.",
+    "stats": {
+      "hours": "Horas dedicadas",
+      "tickets": "Tickets cerrados",
+      "rating": "Calificación media",
+      "certs": "Certificados"
+    },
+    "ctaVolunteerPrimary": "Quiero ser voluntario",
+    "ctaVolunteerSecondary": "Generar certificado",
+    "toolsTitle": "Editor y pizarra lado a lado",
+    "toolsSubtitle": "Responde con texto rico, imágenes, tiempo cronometrado y pizarra insertada en la respuesta.",
+    "toolsEditorNote": "Al pegar contenido, pedimos la fuente para mantener transparencia.",
+    "toolsWhiteboardNote": "Dibuja, agrega formas y envía a la respuesta.",
+    "reasonsTitle": "¿Por qué ODAN?",
+    "reasonsSubtitle": "Diferenciales que mantienen la experiencia humana, segura y verificable.",
+    "reasons": [
+      {
+        "title": "100% gratuito",
+        "description": "Siempre sin anuncios ni costos ocultos."
+      },
+      {
+        "title": "Privacidad garantizada",
+        "description": "Contenido sensible protegido con flujo de moderación."
+      },
+      {
+        "title": "Transparencia total",
+        "description": "Atenciones registradas y certificados verificables."
+      },
+      {
+        "title": "Certificación verificable",
+        "description": "Generación de certificados auditables para voluntarios."
+      }
+    ],
+    "transparencyBadge": "Transparencia",
+    "transparencyTitle": "Estadísticas en tiempo real",
+    "transparencySubtitle": "Datos auditables, certificados con QR y registro en blockchain para probar impacto y seguridad.",
+    "flows": {
+      "user": "Landing → Crear cuenta → Abrir ticket → Notificaciones → Respuesta → Chat → Evaluación.",
+      "volunteer": "Landing → Crear cuenta → Tickets disponibles → Aceptar → Editor + Whiteboard → Publicar → Certificar.",
+      "verify": "Certificado con QR → Página pública de validación → Enlace a blockchain."
+    },
+    "ctaBadge": "Listo para usar",
+    "ctaTitle": "Abre un ticket ahora",
+    "ctaSubtitle": "En menos de 2 minutos tu ticket está publicado y un voluntario puede aceptar. Totalmente gratuito y sin burocracia.",
+    "ctaPrimary": "Abrir nuevo ticket",
+    "ctaSecondary": "Ver tickets"
   }
 }

@@ -1,125 +1,369 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, Users, Heart, Clock, HelpCircle, Award } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  ArrowRight,
+  Award,
+  CheckCircle2,
+  Clock,
+  HeartHandshake,
+  MessageCircle,
+  ShieldCheck,
+  Sparkles,
+  Timer,
+  Users,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { api } from '@/lib/api';
 
-export default function HomePage() {
-  const t = useTranslations();
+type StatItem = {
+  label: string;
+  value: number;
+  fallback: string;
+};
 
+export default function HomePage() {
+  const t = useTranslations('landing');
+  const pageRef = useRef<HTMLDivElement>(null);
   const { data: stats } = useQuery({
     queryKey: ['stats'],
     queryFn: () => api.getStats(),
   });
 
+  const steps = (t.raw('steps') as { title: string; description: string }[]).map((step, idx) => ({
+    ...step,
+    icon:
+      idx === 0 ? <MessageCircle className="h-6 w-6 text-primary" /> :
+      idx === 1 ? <HeartHandshake className="h-6 w-6 text-primary" /> :
+      <CheckCircle2 className="h-6 w-6 text-primary" />,
+  }));
+
+  const reasons = (t.raw('reasons') as { title: string; description: string }[]).map((reason, idx) => ({
+    ...reason,
+    icon:
+      idx === 0 ? <Sparkles className="h-5 w-5" /> :
+      idx === 1 ? <ShieldCheck className="h-5 w-5" /> :
+      idx === 2 ? <Award className="h-5 w-5" /> :
+      <Timer className="h-5 w-5" />,
+  }));
+
+  const formatNumber = (value: number, fallback: string) => {
+    if (!value) return fallback;
+    return new Intl.NumberFormat('pt-BR').format(value);
+  };
+
+  const statItems: StatItem[] = [
+    { label: t('activeTickets'), value: stats?.ticketsResolved || 2345, fallback: '2.345' },
+    { label: t('volunteers'), value: stats?.volunteers || 1234, fallback: '1.234' },
+    { label: t('hours'), value: stats?.hoursSpent || 34567, fallback: '34.567' },
+  ];
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.from('.hero-float', {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: 'power3.out',
+        stagger: 0.15,
+      });
+
+      gsap.utils.toArray<HTMLElement>('.card-pop').forEach((card) => {
+        gsap.from(card, {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+          },
+        });
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
-        <div className="container relative">
-          <div className="flex flex-col items-center text-center space-y-8">
-            <div className="space-y-4 max-w-3xl">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                {t('home.title')}
-              </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground text-lg md:text-xl">
-                {t('home.subtitle')}
-              </p>
+    <div ref={pageRef} className="flex flex-col">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.25),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.25),transparent_35%),linear-gradient(135deg,var(--tw-gradient-from),var(--tw-gradient-to))] from-slate-900 via-slate-950 to-slate-900" />
+        <div className="absolute inset-0 opacity-30" aria-hidden>
+          <div className="grid h-full w-full grid-cols-8 gap-px">
+            {Array.from({ length: 64 }).map((_, i) => (
+              <div key={i} className="border border-white/5" />
+            ))}
+          </div>
+        </div>
+
+        <div className="container relative pb-24 pt-20 md:pt-28">
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
+            <div className="space-y-8 text-white">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium hero-float">
+                <Sparkles className="h-4 w-4" />
+                {t('badge')}
+              </div>
+              <div className="space-y-4 hero-float">
+                <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+                  {t('title')}
+                </h1>
+                <p className="max-w-2xl text-lg text-white/80">
+                  {t('subtitle')}
+                </p>
+              </div>
+              <div className="flex flex-col gap-4 sm:flex-row hero-float">
+                <Button size="lg" asChild className="shadow-xl shadow-primary/30">
+                  <Link href="/tickets/new">
+                    {t('ctaHelp')}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="bg-white/10 text-white border-white/30">
+                  <Link href="/login?role=volunteer">
+                    {t('ctaVolunteer')}
+                  </Link>
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-3 text-sm text-white/70 hero-float">
+                <Badge variant="outline" className="border-white/30 bg-white/5 text-white">
+                  {t('badgeNoAds')}
+                </Badge>
+                <Badge variant="outline" className="border-white/30 bg-white/5 text-white">
+                  {t('badgeTelegram')}
+                </Badge>
+                <Badge variant="outline" className="border-white/30 bg-white/5 text-white">
+                  {t('badgeCert')}
+                </Badge>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild>
-                <Link href="/tickets/new">
-                  {t('home.cta.getHelp')}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+
+            <Card className="card-pop border-white/10 bg-white/10 text-white backdrop-blur">
+              <CardHeader className="space-y-2">
+                <CardTitle className="text-2xl">{t('quickTitle')}</CardTitle>
+                <CardDescription className="text-white/70">
+                  {t('quickSubtitle')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+                  <div>
+                    <p className="text-sm text-white/60">{t('activeTickets')}</p>
+                    <p className="text-2xl font-semibold">{statItems[0].fallback}</p>
+                  </div>
+                  <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-100">Tempo real</Badge>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                    <p className="text-white/60">{t('hours')}</p>
+                    <p className="text-lg font-semibold">{formatNumber(stats?.hoursSpent, '34.567')}</p>
+                  </div>
+                  <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                    <p className="text-white/60">{t('volunteers')}</p>
+                    <p className="text-lg font-semibold">{formatNumber(stats?.volunteers, statItems[1].fallback)}</p>
+                  </div>
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                  <p className="text-white/60">Privacidade</p>
+                  <p className="text-sm text-white">{t('privacy')}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona" className="container py-16 md:py-20 space-y-10">
+        <div className="flex flex-col gap-3 text-center">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{t('stepsTitle')}</h2>
+          <p className="text-lg text-muted-foreground">
+            {t('stepsSubtitle')}
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {steps.map((step) => (
+            <Card key={step.title} className="card-pop">
+              <CardHeader className="space-y-4">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  {step.icon}
+                </div>
+                <CardTitle>{step.title}</CardTitle>
+                <CardDescription>{step.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="voluntarios" className="py-16 md:py-20 bg-muted/40">
+        <div className="container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="space-y-6 card-pop">
+            <Badge variant="secondary" className="bg-primary/10 text-primary">{t('volunteersBadge')}</Badge>
+            <h3 className="text-3xl font-semibold tracking-tight">{t('volunteersTitle')}</h3>
+            <p className="text-muted-foreground text-lg">
+              {t('volunteersSubtitle')}
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm text-muted-foreground">{t('stats.hours')}</CardTitle>
+                  <p className="text-2xl font-semibold">45h</p>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm text-muted-foreground">{t('stats.tickets')}</CardTitle>
+                  <p className="text-2xl font-semibold">38</p>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm text-muted-foreground">{t('stats.rating')}</CardTitle>
+                  <p className="text-2xl font-semibold">4.8</p>
+                </CardHeader>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm text-muted-foreground">{t('stats.certs')}</CardTitle>
+                  <p className="text-2xl font-semibold">Gerados em 1 clique</p>
+                </CardHeader>
+              </Card>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/login?role=volunteer">{t('ctaVolunteerPrimary')}</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/login?role=volunteer">
-                  {t('home.cta.volunteer')}
-                </Link>
+              <Button asChild variant="outline">
+                <Link href="/certificates">{t('ctaVolunteerSecondary')}</Link>
               </Button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-12 border-y bg-muted/30">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center space-y-2">
-              <Users className="h-8 w-8 text-primary" />
-              <span className="text-3xl font-bold">{stats?.volunteers || '500+'}</span>
-              <span className="text-muted-foreground">{t('home.stats.volunteers')}</span>
-            </div>
-            <div className="flex flex-col items-center space-y-2">
-              <Heart className="h-8 w-8 text-primary" />
-              <span className="text-3xl font-bold">{stats?.peopleHelped || '10,000+'}</span>
-              <span className="text-muted-foreground">{t('home.stats.helped')}</span>
-            </div>
-            <div className="flex flex-col items-center space-y-2">
-              <Clock className="h-8 w-8 text-primary" />
-              <span className="text-3xl font-bold">{stats?.hoursSpent || '25,000+'}</span>
-              <span className="text-muted-foreground">{t('home.stats.hours')}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">{t('home.features.title')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <HelpCircle className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle>{t('home.features.help.title')}</CardTitle>
-                <CardDescription>{t('home.features.help.description')}</CardDescription>
+          <div className="space-y-4 card-pop">
+            <Card className="overflow-hidden">
+              <CardHeader className="space-y-3 bg-gradient-to-br from-primary/10 via-background to-background">
+                <CardTitle className="text-xl">{t('toolsTitle')}</CardTitle>
+                <CardDescription>
+                  {t('toolsSubtitle')}
+                </CardDescription>
               </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  {/* <HandHeart className="h-6 w-6 text-primary" /> */}
+              <CardContent className="space-y-3">
+                <div className="rounded-lg border p-3">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    Tempo ativo: 00:12:34
+                  </div>
+                  <div className="mt-2 rounded-md border bg-muted/40 p-3 text-sm">
+                    [B] [I] [Link] [Codigo] [Lista] [Imagem] [Whiteboard]
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {t('toolsEditorNote')}
+                  </p>
                 </div>
-                <CardTitle>{t('home.features.volunteer.title')}</CardTitle>
-                <CardDescription>{t('home.features.volunteer.description')}</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Award className="h-6 w-6 text-primary" />
+                <div className="rounded-lg border p-3">
+                  <p className="text-sm font-medium">Whiteboard</p>
+                  <p className="text-sm text-muted-foreground">{t('toolsWhiteboardNote')}</p>
                 </div>
-                <CardTitle>{t('home.features.certificate.title')}</CardTitle>
-                <CardDescription>{t('home.features.certificate.description')}</CardDescription>
-              </CardHeader>
+              </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container">
-          <div className="flex flex-col items-center text-center space-y-6">
-            <h2 className="text-3xl font-bold">{t('home.title')}</h2>
-            <p className="max-w-lg opacity-90">{t('home.subtitle')}</p>
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/tickets/new">
-                {t('home.cta.getHelp')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+      <section id="por-que" className="container py-16 md:py-20 space-y-10">
+        <div className="space-y-3 text-center">
+          <h3 className="text-3xl font-semibold tracking-tight">{t('reasonsTitle')}</h3>
+          <p className="text-lg text-muted-foreground">
+            {t('reasonsSubtitle')}
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {reasons.map((reason) => (
+            <Card key={reason.title} className="card-pop h-full">
+              <CardHeader className="space-y-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  {reason.icon}
+                </div>
+                <CardTitle className="text-lg">{reason.title}</CardTitle>
+                <CardDescription>{reason.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="sobre" className="py-16 md:py-20 bg-muted/40">
+        <div className="container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="space-y-4 card-pop">
+            <Badge variant="secondary" className="bg-secondary text-foreground">{t('transparencyBadge')}</Badge>
+            <h3 className="text-3xl font-semibold tracking-tight">{t('transparencyTitle')}</h3>
+            <p className="text-muted-foreground text-lg">
+              {t('transparencySubtitle')}
+            </p>
+            <div className="grid gap-4 md:grid-cols-3">
+              {statItems.map((item) => (
+                <Card key={item.label} className="card-pop">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm text-muted-foreground">{item.label}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-semibold">{formatNumber(item.value, item.fallback)}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
+
+          <Card className="card-pop">
+            <CardHeader>
+              <CardTitle className="text-xl">Fluxos claros</CardTitle>
+              <CardDescription>
+                Usuario abre chamado, voluntario aceita, responde com transparencia e gera certificado.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm text-muted-foreground">
+              <div className="rounded-lg border p-3">
+                <p className="font-semibold text-foreground">Fluxo usuario</p>
+                <p>{t('flows.user')}</p>
+              </div>
+              <div className="rounded-lg border p-3">
+                <p className="font-semibold text-foreground">Fluxo voluntario</p>
+                <p>{t('flows.volunteer')}</p>
+              </div>
+              <div className="rounded-lg border p-3">
+                <p className="font-semibold text-foreground">Verificacao</p>
+                <p>{t('flows.verify')}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="container py-16 md:py-20 text-center space-y-6">
+        <Badge variant="outline" className="card-pop">{t('ctaBadge')}</Badge>
+        <h3 className="text-3xl font-semibold tracking-tight">{t('ctaTitle')}</h3>
+        <p className="max-w-2xl mx-auto text-muted-foreground text-lg">
+          {t('ctaSubtitle')}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center card-pop">
+          <Button size="lg" asChild>
+            <Link href="/tickets/new">
+              {t('ctaPrimary')}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/tickets">{t('ctaSecondary')}</Link>
+          </Button>
         </div>
       </section>
     </div>
