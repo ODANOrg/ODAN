@@ -15,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { api } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
-import Link from 'next/link';
+import Link from '@/components/i18n/locale-link';
 
 const categories = ['OS', 'SOFTWARE', 'HARDWARE', 'NETWORK', 'SECURITY', 'MOBILE', 'OTHER'];
 

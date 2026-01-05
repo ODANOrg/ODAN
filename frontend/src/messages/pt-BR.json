@@ -66,7 +66,9 @@
     "profile": "Perfil",
     "newTicket": "Novo chamado",
     "certificates": "Certificados",
-    "logout": "Sair"
+    "logout": "Sair",
+    "signIn": "Entrar",
+    "signUp": "Criar conta"
   },
   "home": {
     "title": "Ajuda Digital para Todos",
@@ -137,7 +139,14 @@
     "roleVolunteer": "Quero ajudar",
     "roleBoth": "Ambos",
     "already": "Já tem conta?",
-    "enter": "Entrar"
+    "enter": "Entrar",
+    "preferredBadge": "Preferido"
+  },
+
+  "dashboard": {
+    "welcomeBack": "Bem-vindo de volta, {name}!",
+    "thisMonth": "este mês",
+    "totalVolunteerTime": "Tempo total como voluntário"
   },
   "tickets": {
     "title": "Pedidos de Ajuda",
@@ -266,6 +275,8 @@
     "navHow": "Como funciona",
     "navVolunteers": "Para voluntários",
     "navAbout": "Sobre",
+    "legal": "Legal",
+    "tagline": "Tecnologia humana, gratuita e acessível. Notificações sem anúncios, certificação verificável e moderação focada em segurança.",
     "copyright": "© {year} ODAN. Livre e código aberto."
   },
   "navCustom": {

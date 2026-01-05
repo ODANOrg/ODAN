@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/i18n/locale-link';
 import { useTranslations } from 'next-intl';
 import { MessageSquare, Github, Chrome, ShieldCheck, ArrowRight, Users, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -107,7 +108,7 @@ export default function LoginPage() {
               <div key={provider.id} className="space-y-2">
                 <Button
                   variant="outline"
-                  className="relative w-full justify-start gap-3 border-muted-foreground/20 text-left"
+                  className="w-full justify-start gap-3 border-muted-foreground/20 text-left h-auto py-3"
                   size="lg"
                   onClick={() => handleLogin(provider.id)}
                 >
@@ -117,15 +118,15 @@ export default function LoginPage() {
                   >
                     <provider.icon className="h-5 w-5" />
                   </span>
-                  <div className="flex flex-1 flex-col">
-                    <span className="text-base font-semibold">{provider.label}</span>
+                  <div className="flex min-w-0 flex-1 flex-col items-start">
+                    <span className="text-base font-semibold truncate">{provider.label}</span>
                     {provider.recommended && (
                       <span className="text-xs text-muted-foreground">{t('telegramNote')}</span>
                     )}
                   </div>
                   {provider.recommended && (
-                    <Badge variant="secondary" className="absolute right-3 top-3 bg-emerald-100 text-emerald-700">
-                      Preferido
+                    <Badge variant="secondary" className="ml-auto shrink-0 bg-emerald-100 text-emerald-700">
+                      {t('preferredBadge')}
                     </Badge>
                   )}
                 </Button>
@@ -164,7 +165,9 @@ export default function LoginPage() {
 
             <p className="text-center text-sm text-muted-foreground">
               {t('already')}{' '}
-              <Button variant="link" className="px-1" asChild><a href="/login">{t('enter')}</a></Button>
+              <Button variant="link" className="px-1" asChild>
+                <Link href="/login">{t('enter')}</Link>
+              </Button>
             </p>
           </CardContent>
         </Card>

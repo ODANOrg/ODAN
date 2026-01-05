@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import Link from '@/components/i18n/locale-link';
 import { Clock, Ticket, Users, Award, Plus, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -44,7 +44,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-3xl font-bold">{t('nav.dashboard')}</h1>
           <p className="text-muted-foreground">
-            Welcome back, {user?.name}!
+            {t('dashboard.welcomeBack', { name: user?.name || '' })}
           </p>
         </div>
         <Button asChild>
@@ -82,7 +82,7 @@ export default function DashboardPage() {
                   {isVolunteer ? stats?.ticketsResolved || 0 : stats?.ticketsCreated || 0}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  +{stats?.ticketsThisMonth || 0} this month
+                  +{stats?.ticketsThisMonth || 0} {t('dashboard.thisMonth')}
                 </p>
               </CardContent>
             </Card>
@@ -99,7 +99,7 @@ export default function DashboardPage() {
                       {formatDuration((stats?.timeSpent || 0) * 60)}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Total volunteer time
+                      {t('dashboard.totalVolunteerTime')}
                     </p>
                   </CardContent>
                 </Card>

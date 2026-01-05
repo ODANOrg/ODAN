@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import Link from '@/components/i18n/locale-link';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { gsap } from 'gsap';
@@ -76,7 +76,7 @@ export default function HomePage() {
         stagger: 0.15,
       });
 
-      gsap.utils.toArray<HTMLElement>('.card-pop').forEach((card) => {
+          gsap.utils.toArray<HTMLElement>('.card-pop').forEach((card: HTMLElement) => {
         gsap.from(card, {
           y: 30,
           opacity: 0,

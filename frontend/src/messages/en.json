@@ -66,7 +66,9 @@
     "profile": "Profile",
     "newTicket": "New ticket",
     "certificates": "Certificates",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "signIn": "Sign in",
+    "signUp": "Create account"
   },
   "home": {
     "title": "Digital Help for Everyone",
@@ -137,7 +139,14 @@
     "roleVolunteer": "I want to help",
     "roleBoth": "Both",
     "already": "Already have an account?",
-    "enter": "Sign in"
+    "enter": "Sign in",
+    "preferredBadge": "Preferred"
+  },
+
+  "dashboard": {
+    "welcomeBack": "Welcome back, {name}!",
+    "thisMonth": "this month",
+    "totalVolunteerTime": "Total volunteer time"
   },
   "tickets": {
     "title": "Help Requests",
@@ -266,6 +275,8 @@
     "navHow": "How it works",
     "navVolunteers": "For volunteers",
     "navAbout": "About",
+    "legal": "Legal",
+    "tagline": "Human, free and accessible tech help. Ad-free notifications, verifiable certification and moderation focused on safety.",
     "copyright": "© {year} ODAN. Free and open source."
   },
   "navCustom": {

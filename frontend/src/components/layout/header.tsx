@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/i18n/locale-link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
@@ -36,6 +36,7 @@ import {
 import { useAuthStore, useUIStore } from '@/lib/store';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
+import { defaultLocale } from '@/i18n';
 
 const locales = [
   { code: 'en', name: 'English' },
@@ -44,15 +45,18 @@ const locales = [
 ];
 
 export function Header() {
-  const t = useTranslations();
-  const tNav = useTranslations('navCustom');
+  const tNav = useTranslations('nav');
+  const tNavCustom = useTranslations('navCustom');
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
   const { user, token, isAuthenticated, clearAuth } = useAuthStore();
   const { toggleSidebar } = useUIStore();
 
-  const currentLocale = pathname.split('/')[1] || 'en';
+  const segments = pathname.split('/');
+  const maybeLocale = segments[1];
+  const currentLocale = locales.some((l) => l.code === maybeLocale) ? maybeLocale : defaultLocale;
+  const homeHref = currentLocale === defaultLocale ? '/' : `/${currentLocale}`;
 
   const handleLogout = async () => {
     if (token) {
@@ -63,16 +67,22 @@ export function Header() {
       }
     }
     clearAuth();
-    router.push('/');
+    router.push(homeHref);
   };
 
   const changeLocale = (locale: string) => {
     const segments = pathname.split('/');
-    if (locales.some((l) => l.code === segments[1])) {
-      segments[1] = locale;
-    } else {
-      segments.splice(1, 0, locale);
+    const hasLocale = locales.some((l) => l.code === segments[1]);
+
+    // If switching to default locale (as-needed), remove the locale segment.
+    if (locale === defaultLocale) {
+      if (hasLocale) segments.splice(1, 1);
+      router.push(segments.join('/') || '/');
+      return;
     }
+
+    if (hasLocale) segments[1] = locale;
+    else segments.splice(1, 0, locale);
     router.push(segments.join('/'));
   };
 
@@ -83,51 +93,49 @@ export function Header() {
           <Menu className="h-5 w-5" />
         </Button>
 
-        <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/logo.svg"
-            alt="ODAN"
-            width={100}
-            height={30}
-            priority
-            className="dark:invert"
-          />
+        <Link href={homeHref} className="flex items-center space-x-2">
+          <Image src="/logo.svg" alt="ODAN" width={30} height={30} priority className="dark:invert" />
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 ml-6">
-          {[{
-            href: '/',
-            label: t('nav.home'),
-            active: pathname === '/',
-          },
-          {
-            href: '/#como-funciona',
-            label: tNav('how'),
-            active: pathname.includes('#como-funciona'),
-          },
-          {
-            href: '/#voluntarios',
-            label: tNav('volunteers'),
-            active: pathname.includes('#voluntarios'),
-          },
-          {
-            href: '/#sobre',
-            label: tNav('about'),
-            active: pathname.includes('#sobre'),
-          },
-          {
-            href: '/tickets',
-            label: t('nav.tickets'),
-            active: pathname.includes('/tickets'),
-          },
-          isAuthenticated
-            ? {
-                href: '/certificates',
-                label: t('nav.certificates'),
-                active: pathname.includes('/certificates'),
-              }
-            : null,
-          ]
+          {(
+            [
+              {
+                href: '/',
+                label: tNav('home'),
+                active: pathname === '/' || pathname === `/${currentLocale}`,
+              },
+              {
+                href: '/#como-funciona',
+                label: tNavCustom('how'),
+                active: pathname === '/' || pathname === `/${currentLocale}`,
+              },
+              {
+                href: '/#voluntarios',
+                label: tNavCustom('volunteers'),
+                active: pathname === '/' || pathname === `/${currentLocale}`,
+              },
+              {
+                href: '/#sobre',
+                label: tNavCustom('about'),
+                active: pathname === '/' || pathname === `/${currentLocale}`,
+              },
+              {
+                href: '/tickets',
+                label: tNav('tickets'),
+                active: pathname.includes('/tickets'),
+              },
+              isAuthenticated
+                ? {
+                    href: '/certificates',
+                    label: tNav('certificates'),
+                    active: pathname.includes('/certificates'),
+                  }
+                : null,
+            ]
+              .filter(Boolean)
+              .map((item) => item as { href: string; label: string; active: boolean })
+          )
             .filter(Boolean)
             .map((item) => {
               const navItem = item as { href: string; label: string; active: boolean };
@@ -198,31 +206,31 @@ export function Header() {
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard">
                     <Home className="mr-2 h-4 w-4" />
-                    {t('nav.dashboard')}
+                      {tNav('dashboard')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/tickets/new">
                     <Plus className="mr-2 h-4 w-4" />
-                    {t('nav.newTicket')}
+                      {tNav('newTicket')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/profile">
                     <User className="mr-2 h-4 w-4" />
-                    {t('nav.profile')}
+                      {tNav('profile')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/certificates">
                     <Award className="mr-2 h-4 w-4" />
-                    {t('nav.certificates')}
+                      {tNav('certificates')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  {t('nav.logout')}
+                  {tNav('logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -230,17 +238,17 @@ export function Header() {
             <>
               <div className="hidden md:flex items-center gap-2">
                 <Button asChild variant="ghost" size="sm">
-                  <Link href="/login">Entrar</Link>
+                  <Link href="/login">{tNav('signIn')}</Link>
                 </Button>
                 <Button asChild size="sm">
                   <Link href="/login?mode=signup">
                     <Sparkles className="mr-1 h-4 w-4" />
-                    Criar Conta
+                    {tNav('signUp')}
                   </Link>
                 </Button>
               </div>
               <Button asChild size="sm" className="md:hidden">
-                <Link href="/login">Entrar</Link>
+                <Link href="/login">{tNav('signIn')}</Link>
               </Button>
             </>
           )}

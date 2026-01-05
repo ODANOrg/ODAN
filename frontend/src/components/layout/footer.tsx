@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/i18n/locale-link';
 import { useTranslations } from 'next-intl';
 import { Github } from 'lucide-react';
 
@@ -17,7 +17,7 @@ export function Footer() {
             <span>ODAN - Open Digital Assistance Network</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xl">
-            Tecnologia humana, gratuita e acessivel. Notificacoes sem anuncios, certificacao verificavel e moderacao focada em seguranca.
+              {t('footer.tagline')}
           </p>
           <p className="text-xs text-muted-foreground">{t('footer.copyright', { year })}</p>
         </div>
@@ -32,7 +32,7 @@ export function Footer() {
             </div>
           </div>
           <div className="space-y-2">
-            <p className="font-semibold text-foreground">Legal</p>
+            <p className="font-semibold text-foreground">{t('footer.legal')}</p>
             <div className="flex flex-col space-y-1 text-muted-foreground">
               <Link href="/terms" className="hover:text-foreground">{t('footer.terms')}</Link>
               <Link href="/privacy" className="hover:text-foreground">{t('footer.privacy')}</Link>
