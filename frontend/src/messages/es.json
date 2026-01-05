@@ -58,7 +58,15 @@
     "roleVolunteer": "Quiero ayudar",
     "roleBoth": "Ambos",
     "already": "¿Ya tienes cuenta?",
-    "enter": "Entrar"
+    "enter": "Entrar",
+
+    "home": "Inicio",
+    "tickets": "Tickets",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "newTicket": "Nuevo ticket",
+    "certificates": "Certificados",
+    "logout": "Salir"
   },
   "home": {
     "title": "Ayuda Digital para Todos",
@@ -97,8 +105,39 @@
       "telegram": "Telegram",
       "google": "Google",
       "github": "GitHub",
-      "twitter": "X (Twitter)"
-    }
+      "twitter": "X (Twitter)",
+      "telegramLabel": "Continuar con Telegram",
+      "googleLabel": "Continuar con Google",
+      "githubLabel": "Continuar con GitHub",
+      "twitterLabel": "Continuar con X"
+    },
+    "heroBadge": "Sin anuncios, foco en la ayuda",
+    "heroTitle": "Crea tu cuenta en segundos",
+    "heroSubtitle": "Elige Telegram (recomendado) o tu proveedor favorito. Notificaciones gratuitas, privacidad y transparencia en cada atención.",
+    "cards": {
+      "user": {
+        "title": "Para quien necesita ayuda",
+        "subtitle": "Abrir tickets, adjuntar imágenes y chatear en vivo con voluntarios.",
+        "bullet": "Notificaciones por Telegram o email."
+      },
+      "volunteer": {
+        "title": "Para voluntarios",
+        "subtitle": "Aceptar tickets, usar editor rico + pizarra y generar certificados verificables.",
+        "bullet": "Horas e impacto registrados."
+      }
+    },
+    "recommendedReasonTitle": "¿Por qué Telegram?",
+    "recommendedReasons": [
+      "Reduce costos y mantiene la plataforma sin anuncios.",
+      "Notificaciones gratuitas sobre tus tickets.",
+      "Privacidad mantenida sin compartir email."
+    ],
+    "rolePrompt": "¿Cómo quieres usar ODAN?",
+    "roleHelp": "Necesito ayuda",
+    "roleVolunteer": "Quiero ayudar",
+    "roleBoth": "Ambos",
+    "already": "¿Ya tienes cuenta?",
+    "enter": "Entrar"
   },
   "tickets": {
     "title": "Solicitudes de Ayuda",
