@@ -54,7 +54,7 @@ export default function HomePage() {
       <Timer className="h-5 w-5" />,
   }));
 
-  const formatNumber = (value: number, fallback: string) => {
+  const formatNumber = (value: number | undefined | null, fallback: string) => {
     if (value === undefined || value === null) return fallback;
     return new Intl.NumberFormat('pt-BR').format(value);
   };
