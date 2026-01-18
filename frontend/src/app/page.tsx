@@ -14,7 +14,6 @@ import {
   HeartHandshake,
   MessageCircle,
   ShieldCheck,
-  Sparkles,
   Timer,
   Users,
 } from 'lucide-react';
@@ -48,7 +47,7 @@ export default function HomePage() {
   const reasons = (t.raw('reasons') as { title: string; description: string }[]).map((reason, idx) => ({
     ...reason,
     icon:
-      idx === 0 ? <Sparkles className="h-5 w-5" /> :
+      idx === 0 ? <HeartHandshake className="h-5 w-5" /> :
       idx === 1 ? <ShieldCheck className="h-5 w-5" /> :
       idx === 2 ? <Award className="h-5 w-5" /> :
       <Timer className="h-5 w-5" />,
@@ -109,7 +108,7 @@ export default function HomePage() {
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
             <div className="space-y-8 text-white">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium hero-float">
-                <Sparkles className="h-4 w-4" />
+                <HeartHandshake className="h-4 w-4" />
                 {t('badge')}
               </div>
               <div className="space-y-4 hero-float">

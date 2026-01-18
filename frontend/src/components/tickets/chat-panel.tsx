@@ -24,12 +24,10 @@ import { cn } from '@/lib/utils';
 interface Message {
   id: string;
   content: string;
-  sender: {
-    id: string;
-    name: string;
-    avatar?: string;
-  };
-  createdAt: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar?: string;
+  timestamp: string;
 }
 
 interface ChatPanelProps {
@@ -52,35 +50,30 @@ export function ChatPanel({ ticketId }: ChatPanelProps) {
 
     const socket = getSocket();
 
-    socket.on('message', (message: Message) => {
+    socket.on('message:new', (message: Message) => {
       setMessages((prev) => [...prev, message]);
     });
 
-    socket.on('typing', (data: { userId: string; userName: string }) => {
+    socket.on('typing:update', (data: { userId: string; userName: string; isTyping: boolean }) => {
       if (data.userId !== user?.id) {
-        setIsTyping(data.userName);
+        setIsTyping(data.isTyping ? data.userName : null);
       }
     });
 
-    socket.on('stop-typing', () => {
-      setIsTyping(null);
-    });
-
-    socket.on('recording-started', () => {
+    socket.on('recording:started', () => {
       setIsRecording(true);
     });
 
-    socket.on('messages-history', (history: Message[]) => {
+    socket.on('messages:history', (history: Message[]) => {
       setMessages(history);
     });
 
     return () => {
       leaveTicketChat(ticketId);
-      socket.off('message');
-      socket.off('typing');
-      socket.off('stop-typing');
-      socket.off('recording-started');
-      socket.off('messages-history');
+      socket.off('message:new');
+      socket.off('typing:update');
+      socket.off('recording:started');
+      socket.off('messages:history');
     };
   }, [ticketId, user?.id]);
 
@@ -141,17 +134,17 @@ export function ChatPanel({ ticketId }: ChatPanelProps) {
               key={message.id}
               className={cn(
                 'flex gap-2',
-                message.sender.id === user?.id ? 'flex-row-reverse' : ''
+                message.senderId === user?.id ? 'flex-row-reverse' : ''
               )}
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage src={message.sender.avatar} />
-                <AvatarFallback>{message.sender.name?.charAt(0)}</AvatarFallback>
+                <AvatarImage src={message.senderAvatar} />
+                <AvatarFallback>{message.senderName?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div
                 className={cn(
                   'max-w-[70%] rounded-lg px-3 py-2 text-sm',
-                  message.sender.id === user?.id
+                  message.senderId === user?.id
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-muted'
                 )}
