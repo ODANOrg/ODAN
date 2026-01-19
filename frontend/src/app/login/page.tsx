@@ -51,22 +51,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-6rem)] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="container grid gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-12">
-        <div className="flex flex-col justify-center space-y-6 text-center text-white lg:text-left">
-          <Badge variant="outline" className="w-fit border-white/30 bg-white/10 text-white">
+    <div className="min-h-[calc(100vh-6rem)] overflow-x-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      <div className="container grid grid-cols-1 gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-12 lg:py-12">
+        <div className="flex w-full max-w-full flex-col items-center justify-center space-y-4 text-center text-white sm:space-y-6 lg:items-start lg:text-left">
+          <Badge variant="outline" className="w-fit border-white/30 bg-white/10 text-white lg:mx-0">
             {t('loginHeroBadge')}
           </Badge>
           <div className="space-y-3">
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+            <h1 className="text-2xl font-semibold leading-tight sm:text-4xl md:text-5xl">
               {t('loginHeroTitle')}
             </h1>
-            <p className="text-lg text-white/80 max-w-2xl">
+            <p className="max-w-full text-base text-white/80 sm:max-w-2xl sm:text-lg">
               {t('loginHeroSubtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid w-full max-w-full grid-cols-1 gap-4 sm:max-w-2xl sm:grid-cols-2 lg:max-w-none">
             <Card className="bg-white/5 border-white/10 text-white">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg">{t('cards.user.title')}</CardTitle>
@@ -94,7 +94,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <Card className="relative card-pop w-full max-w-xl lg:max-w-none lg:justify-self-end">
+        <Card className="relative card-pop mx-auto w-full max-w-full lg:mx-0 lg:justify-self-end">
           <div className="absolute inset-x-6 top-0 h-1 rounded-full bg-gradient-to-r from-primary via-sky-400 to-primary" />
           <CardHeader className="text-center space-y-3 pt-6">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
@@ -108,7 +108,7 @@ export default function LoginPage() {
               <div key={provider.id} className="space-y-2">
                 <Button
                   variant="outline"
-                  className="w-full flex-wrap justify-start gap-3 border-muted-foreground/20 text-left h-auto py-3 sm:flex-nowrap"
+                  className="flex w-full flex-row items-start gap-3 border-muted-foreground/20 text-left h-auto py-3"
                   size="lg"
                   onClick={() => handleLogin(provider.id)}
                 >
@@ -118,17 +118,26 @@ export default function LoginPage() {
                   >
                     <provider.icon className="h-5 w-5" />
                   </span>
-                  <div className="flex min-w-0 flex-1 flex-col items-start">
-                    <span className="text-base font-semibold truncate">{provider.label}</span>
+                  <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
+                    <div className="flex w-full flex-wrap items-start gap-2">
+                      <span className="break-words text-sm font-semibold leading-tight sm:text-base whitespace-normal">
+                        {provider.label}
+                      </span>
+                      {provider.recommended && (
+                        <Badge
+                          variant="secondary"
+                          className="w-fit shrink-0 bg-emerald-100 text-emerald-700"
+                        >
+                          {t('preferredBadge')}
+                        </Badge>
+                      )}
+                    </div>
                     {provider.recommended && (
-                      <span className="text-xs text-muted-foreground">{t('telegramNote')}</span>
+                      <span className="break-words text-xs text-muted-foreground whitespace-normal">
+                        {t('telegramNote')}
+                      </span>
                     )}
                   </div>
-                  {provider.recommended && (
-                    <Badge variant="secondary" className="ml-0 shrink-0 bg-emerald-100 text-emerald-700 sm:ml-auto">
-                      {t('preferredBadge')}
-                    </Badge>
-                  )}
                 </Button>
                 {provider.recommended && (
                   <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
