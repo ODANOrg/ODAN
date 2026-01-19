@@ -9,7 +9,7 @@ import sys
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -98,8 +98,8 @@ app = FastAPI(
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=settings.allowed_origins or [],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -135,6 +135,7 @@ async def health_check():
             "ticket_stats_window_days": settings.ticket_stats_window_days,
             "ticket_stats_timezone": settings.ticket_stats_timezone,
             "carto_enabled": bool(settings.carto_api_url),
+            "auth_required": bool(settings.analytics_api_key),
         },
     }
 
@@ -150,7 +151,10 @@ async def schedule_carto_exports() -> None:
 
 
 @app.get("/analytics/tickets/hourly", response_model=HourlyTicketStatsResponse)
-async def hourly_ticket_stats():
+async def hourly_ticket_stats(x_analytics_key: str | None = Header(default=None, alias="X-Analytics-Key")):
+    if settings.analytics_api_key and x_analytics_key != settings.analytics_api_key:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
     if not settings.database_url:
         raise HTTPException(status_code=503, detail="Analytics database not configured")
 
