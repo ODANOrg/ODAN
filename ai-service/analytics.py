@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-import asyncpg
 import httpx
 
 from config import Settings
@@ -24,6 +23,8 @@ class HourlyBucket:
 async def fetch_hourly_ticket_counts(settings: Settings) -> list[HourlyBucket]:
     if not settings.database_url:
         raise RuntimeError("Database URL not configured for analytics")
+
+    import asyncpg
 
     tz = ZoneInfo(settings.ticket_stats_timezone)
 

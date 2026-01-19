@@ -22,7 +22,7 @@ def build_buckets(main_module):
     return [main_module.HourlyTicketBucket(hour=hour, count=hour) for hour in range(24)]
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_hourly_stats_requires_api_key(monkeypatch):
     main = load_main(
         monkeypatch,
@@ -42,7 +42,7 @@ async def test_hourly_stats_requires_api_key(monkeypatch):
     assert response.status_code == 401
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_hourly_stats_returns_buckets(monkeypatch):
     main = load_main(
         monkeypatch,

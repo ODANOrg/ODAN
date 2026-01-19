@@ -1,10 +1,13 @@
+import sys
+import types
+
 import pytest
 
 from analytics import HourlyBucket, fetch_hourly_ticket_counts, send_hourly_stats_to_carto
 from config import Settings
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_fetch_hourly_ticket_counts_fills_missing_hours(monkeypatch):
     class FakeConn:
         async def fetch(self, _query, _tz, _window):
@@ -16,7 +19,11 @@ async def test_fetch_hourly_ticket_counts_fills_missing_hours(monkeypatch):
     async def fake_connect(_url):
         return FakeConn()
 
-    import asyncpg
+    try:
+        import asyncpg
+    except ModuleNotFoundError:
+        asyncpg = types.SimpleNamespace(connect=None)
+        sys.modules["asyncpg"] = asyncpg
 
     monkeypatch.setattr(asyncpg, "connect", fake_connect)
 
@@ -34,7 +41,7 @@ async def test_fetch_hourly_ticket_counts_fills_missing_hours(monkeypatch):
     assert buckets[0] == HourlyBucket(hour=0, count=0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_send_hourly_stats_to_carto_posts_payload(monkeypatch):
     captured = {}
 
