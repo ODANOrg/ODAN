@@ -103,6 +103,7 @@ cd ai-service && pip install -r requirements.txt && python main.py
 Frontend-specific public variables:
 - `NEXT_PUBLIC_API_URL`
 - `NEXT_PUBLIC_SOCKET_URL`
+- `ODAN_API_URL` (server-only, used for Docker-internal routing)
 
 Backend/service variables are documented inline in [.env.example](.env.example).
 

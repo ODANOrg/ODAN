@@ -292,6 +292,8 @@
     "navHow": "How it works",
     "navVolunteers": "For volunteers",
     "navAbout": "About",
+    "faq": "FAQ",
+    "safety": "Safety & trust",
     "legal": "Legal",
     "tagline": "Human, free and accessible tech help. Ad-free notifications, verifiable certification and moderation focused on safety.",
     "copyright": "© {year} ODAN. Free and open source."
@@ -372,6 +374,60 @@
           "body": [
             "We value traceable activity and verifiable certification.",
             "This helps build trust for users and volunteers."
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "FAQ",
+      "subtitle": "Quick answers to the most common questions.",
+      "sections": [
+        {
+          "title": "Is ODAN free?",
+          "body": [
+            "Yes. ODAN is a community project focused on free tech help.",
+            "We do not charge requesters or volunteers."
+          ]
+        },
+        {
+          "title": "How are volunteers verified?",
+          "body": [
+            "Volunteers build reputation through completed tickets and transparent history.",
+            "Moderation and reports help keep the experience safe."
+          ]
+        },
+        {
+          "title": "What should I include in a ticket?",
+          "body": [
+            "Describe the problem, the device, and steps already tried.",
+            "Add screenshots or photos when possible."
+          ]
+        }
+      ]
+    },
+    "safety": {
+      "title": "Safety & Trust",
+      "subtitle": "Guidelines to keep everyone safe while getting help.",
+      "sections": [
+        {
+          "title": "Protect your data",
+          "body": [
+            "Never share passwords, 2FA codes, or sensitive personal data.",
+            "Redact confidential information before sending screenshots."
+          ]
+        },
+        {
+          "title": "Transparent help",
+          "body": [
+            "Keep conversations inside the platform whenever possible.",
+            "Use the report feature if something feels suspicious."
+          ]
+        },
+        {
+          "title": "Respect and inclusion",
+          "body": [
+            "Treat everyone with respect and patience.",
+            "Abusive behavior is not tolerated."
           ]
         }
       ]

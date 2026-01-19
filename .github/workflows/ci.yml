@@ -71,6 +71,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Static check (compile)
         run: python -m compileall .
+      - name: Tests
+        run: python -m pytest
 
   docker-build:
     name: Docker build validation

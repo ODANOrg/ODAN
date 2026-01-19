@@ -1,6 +1,7 @@
 'use client';
 
 import Link from '@/components/i18n/locale-link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Github } from 'lucide-react';
 
@@ -13,7 +14,9 @@ export function Footer() {
       <div className="container grid gap-6 py-10 md:grid-cols-[1.2fr_1fr]">
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm font-semibold">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">O</div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+              <Image src="/logo.svg" alt="ODAN" width={20} height={20} className="dark:invert" />
+            </div>
             <span>{t('footer.brand')}</span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xl">
@@ -29,6 +32,7 @@ export function Footer() {
               <Link href="/how-it-works" className="hover:text-foreground">{t('footer.navHow')}</Link>
               <Link href="/volunteers" className="hover:text-foreground">{t('footer.navVolunteers')}</Link>
               <Link href="/about" className="hover:text-foreground">{t('footer.navAbout')}</Link>
+              <Link href="/faq" className="hover:text-foreground">{t('footer.faq')}</Link>
             </div>
           </div>
           <div className="space-y-2">
@@ -36,12 +40,13 @@ export function Footer() {
             <div className="flex flex-col space-y-1 text-muted-foreground">
               <Link href="/terms" className="hover:text-foreground">{t('footer.terms')}</Link>
               <Link href="/privacy" className="hover:text-foreground">{t('footer.privacy')}</Link>
+              <Link href="/safety" className="hover:text-foreground">{t('footer.safety')}</Link>
               <Link href="/contact" className="hover:text-foreground">{t('footer.contact')}</Link>
             </div>
           </div>
           <div className="md:col-span-2 flex items-center gap-4 text-muted-foreground">
             <a
-              href="https://github.com/odan-project"
+              href="https://github.com/ODANOrg"
               target="_blank"
               rel="noreferrer"
               className="hover:text-foreground"

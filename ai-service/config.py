@@ -3,6 +3,7 @@ ODAN AI Service - Configuration
 """
 
 import os
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
@@ -34,6 +35,54 @@ class Settings(BaseSettings):
     
     # Rate Limiting
     api_rate_limit_per_minute: int = 60
+
+    # CORS
+    allowed_origins: list[str] = Field(
+        default_factory=list,
+        validation_alias=AliasChoices("AI_SERVICE_ALLOWED_ORIGINS")
+    )
+
+    # Analytics (Tickets)
+    database_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("AI_SERVICE_DATABASE_URL", "DATABASE_URL")
+    )
+    ticket_stats_window_days: int = Field(
+        default=30,
+        validation_alias=AliasChoices("TICKET_STATS_WINDOW_DAYS")
+    )
+    ticket_stats_timezone: str = Field(
+        default="UTC",
+        validation_alias=AliasChoices("TICKET_STATS_TIMEZONE")
+    )
+
+    # CARTO Export
+    carto_api_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("CARTO_API_URL")
+    )
+    carto_api_key: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("CARTO_API_KEY")
+    )
+    carto_send_interval_minutes: int = Field(
+        default=60,
+        validation_alias=AliasChoices("CARTO_SEND_INTERVAL_MINUTES")
+    )
+
+    analytics_api_key: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("ANALYTICS_API_KEY")
+    )
+
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def split_allowed_origins(cls, value):
+        if value is None:
+            return []
+        if isinstance(value, list):
+            return value
+        return [origin.strip() for origin in str(value).split(",") if origin.strip()]
     
     class Config:
         env_file = ".env"
