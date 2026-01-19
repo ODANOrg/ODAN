@@ -106,7 +106,7 @@ export default function HomePage() {
 
         <div className="container relative pb-24 pt-20 md:pt-28">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
-            <div className="space-y-8 text-white">
+            <div className="flex flex-col items-center space-y-8 text-center text-white lg:items-start lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium hero-float">
                 <HeartHandshake className="h-4 w-4" />
                 {t('badge')}
@@ -115,24 +115,29 @@ export default function HomePage() {
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
                   {t('title')}
                 </h1>
-                <p className="max-w-2xl text-lg text-white/80">
+                <p className="mx-auto max-w-2xl text-lg text-white/80 lg:mx-0">
                   {t('subtitle')}
                 </p>
               </div>
-              <div className="flex flex-col gap-4 sm:flex-row hero-float">
-                <Button size="lg" asChild className="shadow-xl shadow-primary/30">
+              <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start hero-float">
+                <Button size="lg" asChild className="w-full shadow-xl shadow-primary/30 sm:w-auto">
                   <Link href="/tickets/new">
                     {t('ctaHelp')}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="bg-white/10 text-white border-white/30">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  asChild
+                  className="w-full border-white/30 bg-white/10 text-white sm:w-auto"
+                >
                   <Link href="/login?role=volunteer">
                     {t('ctaVolunteer')}
                   </Link>
                 </Button>
               </div>
-              <div className="flex flex-wrap gap-3 text-sm text-white/70 hero-float">
+              <div className="flex flex-wrap justify-center gap-3 text-sm text-white/70 hero-float lg:justify-start">
                 <Badge variant="outline" className="border-white/30 bg-white/5 text-white">
                   {t('badgeNoAds')}
                 </Badge>
@@ -145,7 +150,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <Card className="card-pop border-white/10 bg-white/10 text-white backdrop-blur">
+            <Card className="card-pop mx-auto w-full max-w-md border-white/10 bg-white/10 text-white backdrop-blur sm:max-w-lg lg:max-w-none">
               <CardHeader className="space-y-2">
                 <CardTitle className="text-2xl">{t('quickTitle')}</CardTitle>
                 <CardDescription className="text-white/70">
@@ -158,9 +163,11 @@ export default function HomePage() {
                     <p className="text-sm text-white/60">{t('activeTickets')}</p>
                     <p className="text-2xl font-semibold">{statItems[0].fallback}</p>
                   </div>
-                  <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-100">Tempo real</Badge>
+                  <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-100">
+                    {t('realtimeBadge')}
+                  </Badge>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid gap-3 text-sm sm:grid-cols-2">
                   <div className="rounded-lg border border-white/10 bg-white/5 p-3">
                     <p className="text-white/60">{t('hours')}</p>
                     <p className="text-lg font-semibold">{formatNumber(stats?.hoursSpent, '34.567')}</p>
@@ -171,7 +178,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="rounded-lg border border-white/10 bg-white/5 p-3">
-                  <p className="text-white/60">Privacidade</p>
+                  <p className="text-white/60">{t('privacyLabel')}</p>
                   <p className="text-sm text-white">{t('privacy')}</p>
                 </div>
               </CardContent>
@@ -205,13 +212,13 @@ export default function HomePage() {
 
       <section id="voluntarios" className="py-16 md:py-20 bg-muted/40">
         <div className="container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-          <div className="space-y-6 card-pop">
+          <div className="space-y-6 card-pop text-center lg:text-left">
             <Badge variant="secondary" className="bg-primary/10 text-primary">{t('volunteersBadge')}</Badge>
             <h3 className="text-3xl font-semibold tracking-tight">{t('volunteersTitle')}</h3>
             <p className="text-muted-foreground text-lg">
               {t('volunteersSubtitle')}
             </p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm text-muted-foreground">{t('stats.hours')}</CardTitle>
@@ -233,11 +240,11 @@ export default function HomePage() {
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm text-muted-foreground">{t('stats.certs')}</CardTitle>
-                  <p className="text-2xl font-semibold">Gerados em 1 clique</p>
+                  <p className="text-2xl font-semibold">{t('stats.certsValue')}</p>
                 </CardHeader>
               </Card>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
               <Button asChild>
                 <Link href="/login?role=volunteer">{t('ctaVolunteerPrimary')}</Link>
               </Button>
@@ -259,17 +266,17 @@ export default function HomePage() {
                 <div className="rounded-lg border p-3">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Clock className="h-4 w-4" />
-                    Tempo ativo: 00:12:34
+                    {t('toolsTimerLabel', { time: '00:12:34' })}
                   </div>
                   <div className="mt-2 rounded-md border bg-muted/40 p-3 text-sm">
-                    [B] [I] [Link] [Codigo] [Lista] [Imagem] [Whiteboard]
+                    {t('toolsToolbar')}
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">
                     {t('toolsEditorNote')}
                   </p>
                 </div>
                 <div className="rounded-lg border p-3">
-                  <p className="text-sm font-medium">Whiteboard</p>
+                  <p className="text-sm font-medium">{t('toolsWhiteboardLabel')}</p>
                   <p className="text-sm text-muted-foreground">{t('toolsWhiteboardNote')}</p>
                 </div>
               </CardContent>
@@ -302,7 +309,7 @@ export default function HomePage() {
 
       <section id="sobre" className="py-16 md:py-20 bg-muted/40">
         <div className="container grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-          <div className="space-y-4 card-pop">
+          <div className="space-y-4 card-pop text-center lg:text-left">
             <Badge variant="secondary" className="bg-secondary text-foreground">{t('transparencyBadge')}</Badge>
             <h3 className="text-3xl font-semibold tracking-tight">{t('transparencyTitle')}</h3>
             <p className="text-muted-foreground text-lg">
@@ -324,22 +331,22 @@ export default function HomePage() {
 
           <Card className="card-pop">
             <CardHeader>
-              <CardTitle className="text-xl">Fluxos claros</CardTitle>
+              <CardTitle className="text-xl">{t('flowsTitle')}</CardTitle>
               <CardDescription>
-                Usuario abre chamado, voluntario aceita, responde com transparencia e gera certificado.
+                {t('flowsSubtitle')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-muted-foreground">
               <div className="rounded-lg border p-3">
-                <p className="font-semibold text-foreground">Fluxo usuario</p>
+                <p className="font-semibold text-foreground">{t('flowsUserLabel')}</p>
                 <p>{t('flows.user')}</p>
               </div>
               <div className="rounded-lg border p-3">
-                <p className="font-semibold text-foreground">Fluxo voluntario</p>
+                <p className="font-semibold text-foreground">{t('flowsVolunteerLabel')}</p>
                 <p>{t('flows.volunteer')}</p>
               </div>
               <div className="rounded-lg border p-3">
-                <p className="font-semibold text-foreground">Verificacao</p>
+                <p className="font-semibold text-foreground">{t('flowsVerifyLabel')}</p>
                 <p>{t('flows.verify')}</p>
               </div>
             </CardContent>

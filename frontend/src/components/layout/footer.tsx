@@ -46,7 +46,7 @@ export function Footer() {
           </div>
           <div className="md:col-span-2 flex items-center gap-4 text-muted-foreground">
             <a
-              href="https://github.com/odan-project"
+              href="https://github.com/ODANOrg"
               target="_blank"
               rel="noreferrer"
               className="hover:text-foreground"
