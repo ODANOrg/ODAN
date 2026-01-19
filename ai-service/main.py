@@ -2,6 +2,8 @@
 ODAN AI Service - Main Application
 """
 
+import asyncio
+import contextlib
 import logging
 import sys
 from contextlib import asynccontextmanager
@@ -12,6 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from analytics import fetch_hourly_ticket_counts, send_hourly_stats_to_carto
 from config import get_settings
 from text_moderation import moderate_text
 from image_moderation import moderate_image
@@ -48,6 +51,18 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     models: dict
+    analytics: dict
+
+
+class HourlyTicketBucket(BaseModel):
+    hour: int
+    count: int
+
+
+class HourlyTicketStatsResponse(BaseModel):
+    windowDays: int
+    timezone: str
+    buckets: list[HourlyTicketBucket]
 
 
 # Lifecycle management
@@ -57,8 +72,17 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Starting ODAN AI Service...")
     logger.info(f"HuggingFace API: {'configured' if settings.huggingface_api_token else 'not configured'}")
     logger.info(f"Local fallback: {'enabled' if settings.use_local_fallback else 'disabled'}")
+
+    analytics_task = None
+    if settings.carto_api_url:
+        analytics_task = asyncio.create_task(schedule_carto_exports())
     
     yield
+
+    if analytics_task:
+        analytics_task.cancel()
+        with contextlib.suppress(asyncio.CancelledError):
+            await analytics_task
     
     logger.info("👋 Shutting down ODAN AI Service...")
 
@@ -106,7 +130,35 @@ async def health_check():
             "text_nsfw": settings.text_nsfw_model,
             "text_offensive": settings.text_offensive_model,
             "image_nsfw": settings.image_nsfw_model,
-        }
+        },
+        "analytics": {
+            "ticket_stats_window_days": settings.ticket_stats_window_days,
+            "ticket_stats_timezone": settings.ticket_stats_timezone,
+            "carto_enabled": bool(settings.carto_api_url),
+        },
+    }
+
+
+async def schedule_carto_exports() -> None:
+    while True:
+        try:
+            buckets = await fetch_hourly_ticket_counts(settings)
+            await send_hourly_stats_to_carto(settings, buckets)
+        except Exception as exc:
+            logger.error("Failed to export hourly ticket stats to CARTO", exc_info=exc)
+        await asyncio.sleep(settings.carto_send_interval_minutes * 60)
+
+
+@app.get("/analytics/tickets/hourly", response_model=HourlyTicketStatsResponse)
+async def hourly_ticket_stats():
+    if not settings.database_url:
+        raise HTTPException(status_code=503, detail="Analytics database not configured")
+
+    buckets = await fetch_hourly_ticket_counts(settings)
+    return {
+        "windowDays": settings.ticket_stats_window_days,
+        "timezone": settings.ticket_stats_timezone,
+        "buckets": [{"hour": bucket.hour, "count": bucket.count} for bucket in buckets],
     }
 
 

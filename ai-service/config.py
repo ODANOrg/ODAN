@@ -3,6 +3,7 @@ ODAN AI Service - Configuration
 """
 
 import os
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
@@ -34,6 +35,34 @@ class Settings(BaseSettings):
     
     # Rate Limiting
     api_rate_limit_per_minute: int = 60
+
+    # Analytics (Tickets)
+    database_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("AI_SERVICE_DATABASE_URL", "DATABASE_URL")
+    )
+    ticket_stats_window_days: int = Field(
+        default=30,
+        validation_alias=AliasChoices("TICKET_STATS_WINDOW_DAYS")
+    )
+    ticket_stats_timezone: str = Field(
+        default="UTC",
+        validation_alias=AliasChoices("TICKET_STATS_TIMEZONE")
+    )
+
+    # CARTO Export
+    carto_api_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("CARTO_API_URL")
+    )
+    carto_api_key: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("CARTO_API_KEY")
+    )
+    carto_send_interval_minutes: int = Field(
+        default=60,
+        validation_alias=AliasChoices("CARTO_SEND_INTERVAL_MINUTES")
+    )
     
     class Config:
         env_file = ".env"
