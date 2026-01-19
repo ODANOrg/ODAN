@@ -1,12 +1,12 @@
 'use client';
 
 import Link from '@/components/i18n/locale-link';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { MessageSquare, Github, Chrome, ShieldCheck, ArrowRight, Users, Sparkles } from 'lucide-react';
+import { MessageSquare, Github, Chrome, ShieldCheck, Users, HeartHandshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { api } from '@/lib/api';
 
 const twitterIcon = ({ className }: { className?: string }) => (
@@ -52,8 +52,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[calc(100vh-6rem)] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <div className="container grid gap-10 py-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="flex flex-col justify-center space-y-6 text-white">
+      <div className="container grid gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-12">
+        <div className="flex flex-col justify-center space-y-6 text-center text-white lg:text-left">
           <Badge variant="outline" className="w-fit border-white/30 bg-white/10 text-white">
             {t('loginHeroBadge')}
           </Badge>
@@ -87,18 +87,18 @@ export default function LoginPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex items-center gap-2 text-sm text-white/70">
-                <Sparkles className="h-4 w-4" />
+                <HeartHandshake className="h-4 w-4" />
                 {t('cards.volunteer.bullet')}
               </CardContent>
             </Card>
           </div>
         </div>
 
-        <Card className="relative card-pop">
+        <Card className="relative card-pop w-full max-w-xl lg:max-w-none lg:justify-self-end">
           <div className="absolute inset-x-6 top-0 h-1 rounded-full bg-gradient-to-r from-primary via-sky-400 to-primary" />
           <CardHeader className="text-center space-y-3 pt-6">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-              <span className="text-2xl font-bold">O</span>
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+              <Image src="/logo.svg" alt="ODAN" width={28} height={28} className="dark:invert" />
             </div>
             <CardTitle className="text-2xl">{t('loginTitle')}</CardTitle>
             <CardDescription>{t('loginSubtitle')}</CardDescription>
@@ -108,7 +108,7 @@ export default function LoginPage() {
               <div key={provider.id} className="space-y-2">
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-3 border-muted-foreground/20 text-left h-auto py-3"
+                  className="w-full flex-wrap justify-start gap-3 border-muted-foreground/20 text-left h-auto py-3 sm:flex-nowrap"
                   size="lg"
                   onClick={() => handleLogin(provider.id)}
                 >
@@ -125,7 +125,7 @@ export default function LoginPage() {
                     )}
                   </div>
                   {provider.recommended && (
-                    <Badge variant="secondary" className="ml-auto shrink-0 bg-emerald-100 text-emerald-700">
+                    <Badge variant="secondary" className="ml-0 shrink-0 bg-emerald-100 text-emerald-700 sm:ml-auto">
                       {t('preferredBadge')}
                     </Badge>
                   )}

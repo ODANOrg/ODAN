@@ -107,7 +107,7 @@ export default function NewTicketPage() {
   const isLoading = checkSimilar.isPending || createTicket.isPending;
 
   return (
-    <div className="container py-8 max-w-2xl">
+    <div className="container max-w-2xl px-4 py-6 sm:px-6 sm:py-8">
       <Card>
         <CardHeader>
           <CardTitle>{t('tickets.create.title')}</CardTitle>

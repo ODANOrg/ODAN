@@ -16,7 +16,7 @@ import {
   User,
   LogOut,
   Globe,
-  Sparkles,
+  UserPlus,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -251,7 +251,7 @@ export function Header() {
                 </Button>
                 <Button asChild size="sm">
                   <Link href="/register">
-                    <Sparkles className="mr-1 h-4 w-4" />
+                    <UserPlus className="mr-1 h-4 w-4" />
                     {tNav('signUp')}
                   </Link>
                 </Button>

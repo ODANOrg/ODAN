@@ -57,7 +57,7 @@ export function Whiteboard({ onSave, ticketId }: WhiteboardProps) {
 
     // Listen for remote whiteboard actions
     const socket = getSocket();
-    socket.on('whiteboard-action', (data: any) => {
+    socket.on('whiteboard:action', (data: any) => {
       if (data.ticketId === ticketId && contextRef.current) {
         // Replay the action
         const ctx = contextRef.current;
@@ -76,7 +76,7 @@ export function Whiteboard({ onSave, ticketId }: WhiteboardProps) {
     });
 
     return () => {
-      socket.off('whiteboard-action');
+      socket.off('whiteboard:action');
     };
   }, [ticketId, color, strokeWidth]);
 
